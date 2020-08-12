@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from blog import views
+from django.conf import settings
+from django.conf.urls.static import static
+from blog.views import MainPage
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-]
+    url('', MainPage.as_view(), name='main'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
