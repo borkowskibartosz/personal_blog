@@ -23,6 +23,7 @@ from blog.views import MainPage
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # url('', MainPage.as_view(), name='main'),
     url('', MainPage.as_view(), name='main'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

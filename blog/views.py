@@ -4,6 +4,6 @@ from .models import Post
 
 # Create your views here.
 class MainPage(TemplateView):
-    template_name = 'main.html'
+    template_name = 'main_t.html'
     def get_context_data(self):
-        return {'posts': Post.objects.all()}
+        return {'posts': Post.objects.filter(status=0)}

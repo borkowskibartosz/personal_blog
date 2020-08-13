@@ -1,0 +1,10 @@
+@register.filter
+def is_new(added, days=7):
+    days_new_deadline = timezone.now() - timezone.timedelta(days=days)
+    return added > days_new_deadline
+
+# use in template
+
+<a {% with obj.added|is_new as is_new %}
+  {% if is_new %}class="is_new newLeft"{% endif %}
+{% endwith %} href="{% url 'app:view' pk %}">link</a>
