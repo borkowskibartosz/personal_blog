@@ -1,0 +1,8 @@
+- category view
+- author view
+- CRUD comment
+- CRUD article
+- logins
+- tests
+- search
+- links for categories

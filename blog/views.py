@@ -1,9 +1,50 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
-from .models import Post
+from django.views.generic.detail import DetailView
+from django.views import View
+from .models import Post, Comment
+from django.contrib.auth.models import User
 
-# Create your views here.
-class MainPage(TemplateView):
-    template_name = 'main_t.html'
+
+class MainView(TemplateView):
+    template_name = 'main.html'
     def get_context_data(self):
         return {'posts': Post.objects.filter(status=0)}
+
+class PostView(DetailView):
+    model = Post
+    template_name = 'post_details.html'
+    slug_url_kwarg = 'post_slug'
+    slug_field = 'slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comments = Comment.objects.filter(source_post__pk=context['post'].pk)
+        context['comments'] = comments
+        return context
+
+class AuthorView(TemplateView):
+    template_name = 'author_posts.html'
+    def get_context_data(self, post_author):
+
+        posts = Post.objects.filter(author__username=str(post_author))
+        ctx = {'posts': posts,
+                'author': post_author}
+        return ctx
+
+
+# class StudentSearch(TemplateView):
+#     template_name = 'student_search.html'
+#     def get_context_data(self, **kwargs):
+#         if self.request.GET:
+#             form = StudentSearchForm(self.request.GET)
+#             if form.is_valid():
+#                 students = Student.objects.filter(last_name__icontains=form.cleaned_data['name'])
+#             else:
+#                 students = []
+#         else:
+#             form = StudentSearchForm()
+#             students = None
+#         ctx = {"form": form,
+#                "students": students}
+#         return ctx

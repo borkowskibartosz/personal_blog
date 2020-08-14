@@ -8,7 +8,7 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
   
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('content', 'rating', 'author','created_on')
+    list_display = ('content', 'rating', 'author','created_on', 'source_post')
     # list_filter = ('author')
     search_fields = ['content']
 

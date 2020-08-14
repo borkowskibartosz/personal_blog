@@ -28,18 +28,28 @@ class Post(models.Model):
     class Meta:
         ordering = ['-created_on']
 
-    @staticmethod
     def pub_date(self):
-        return self.pub_date.strftime('%b %e, %Y')
+        return self.created_on.strftime('%b %e, %Y')
+
+    def summary(self):
+        return self.content[:100]
 
     def __str__(self):
         return self.title
 
+def get_deleted_user_instance():
+    return User.objects.get(username='deleted')
+
 class Comment(models.Model):
     rating = models.IntegerField(default=0)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_comments')
-    created_on = models.DateTimeField(auto_now_add=True)  
+    author = models.ForeignKey(User, on_delete=models.SET(get_deleted_user_instance), related_name='author_comments')
+    source_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_on']
+
     def __str__(self):
         return f'{self.content[:10]} by {self.author.username}'
 

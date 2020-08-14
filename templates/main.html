@@ -1,20 +1,42 @@
 {% extends "base.html" %}
-{% block title %}
-Main Page
-{% endblock %}
+{% load static %}
 
 {% block content %}
-    <table>
-    {% for post in posts %}
-    <tr>
-    <td><h2> {{ post.title }} </h2></td> 
-    </tr>
-    <tr>
-    <td><h4>{{post.author}}, {{ post.created_on }}</h4></td> 
-    </tr>
-    <tr>
-    <td> {{ post.content }} </td> 
-    </tr>
-    {% endfor %}
-    </table>
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4"><small>Latest Blogposts</small>
+        </h1>
+
+        <!-- Blog Post -->
+        {% for post in posts %}
+        <div class="card mb-4">
+          <img class="card-img-top" src="{% static '750x300.png' %}" alt="Card image cap">
+          <div class="card-body">
+            <h2 class="card-title">{{post.title}}</h2>
+            <p class="card-text">{{post.summary|force_escape}}...</p>
+            <a href="{% url 'post_details' post.slug %}" class="btn btn-primary">Read More &rarr;</a>
+
+          </div>
+          <div class="card-footer text-muted">
+            Posted on {{post.pub_date}} by
+          <a href="{% url 'author_posts' post.author %}">{{post.author}}</a>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- Pagination -->
+        <ul class="pagination justify-content-center mb-4">
+          <li class="page-item">
+            <a class="page-link" href="#">&larr; Older</a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Newer &rarr;</a>
+          </li>
+        </ul>
+      </div>
 {% endblock %}
