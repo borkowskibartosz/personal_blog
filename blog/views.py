@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views import View
-from .models import Post, Comment
+from django.db.models import Count
+from .models import Post, Comment, Category
 from django.contrib.auth.models import User
 
 
@@ -25,13 +26,22 @@ class PostView(DetailView):
 
 class AuthorView(TemplateView):
     template_name = 'author_posts.html'
+    
     def get_context_data(self, post_author):
-
         posts = Post.objects.filter(author__username=str(post_author))
         ctx = {'posts': posts,
                 'author': post_author}
         return ctx
 
+class CategoriesView(TemplateView):
+    model = Category
+    template_name = 'categories.html'
+    def get_context_data(self):
+        categories_by_post_no = Category.objects.all().annotate(post_count=Count('category_posts')).values('name', 'post_count')
+        print(categories_by_post_no)
+        ctx = {'categories_by_post_no': categories_by_post_no}
+        return ctx
+     
 
 # class StudentSearch(TemplateView):
 #     template_name = 'student_search.html'

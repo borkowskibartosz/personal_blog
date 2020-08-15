@@ -19,12 +19,13 @@ from django.contrib import admin
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import PostView, MainView, AuthorView
+from blog.views import PostView, MainView, AuthorView, CategoriesView
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('', MainView.as_view(), name='main'),
     path('post/<slug:post_slug>/', PostView.as_view(), name='post_details'),
-    path('author/<str:post_author>/', AuthorView.as_view(), name = 'author_posts')
+    path('author/<str:post_author>/', AuthorView.as_view(), name = 'author_posts'),
+    path('categories/', CategoriesView.as_view(), name='categories'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

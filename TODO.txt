@@ -1,8 +1,13 @@
-- category view
-- author view
+TODO
+
++ all categories view
+- individual category view
++ author view
 - CRUD comment
 - CRUD article
 - logins
 - tests
 - search
-- links for categories
+- links for categories with popularity
+- pagination
+- categies in post detail
