@@ -24,10 +24,14 @@
                 <th scope="row">{{post.pk}}</th>
                 <td><a href="{% url "post_details" post.slug %}">{{ post.title }}</a></td>
                 <td>{{post.pub_date}}</td>
-                {% comment %} <td>TODO Categories</td> {% endcomment %}
-                {% comment %} <td>{% for category in post.categories.all %}{{post.category.name}}{% endfor %}</td> {% endcomment %}
-                <td>{% for cat in post.categories.all %} {{cat.name}}, {%endfor%}</td>
-
+                <td>  {% for cat in post.categories.all %} 
+                        {% if forloop.last %}
+                          {{cat.name }} 
+                        {% else %} 
+                          {{cat.name}}, 
+                        {% endif %}
+                      {%endfor%}
+                </td>
                 </tr>
             {% empty %}
                 No data

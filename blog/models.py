@@ -41,7 +41,7 @@ def get_deleted_user_instance():
     return User.objects.get(username='deleted')
 
 class Comment(models.Model):
-    rating = models.IntegerField(default=0)
+    rating = models.IntegerField(default=0, null=True, blank=True)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.SET(get_deleted_user_instance), related_name='author_comments')
     source_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')

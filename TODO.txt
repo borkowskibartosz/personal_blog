@@ -1,13 +1,20 @@
 TODO
 
 + all categories view
-- individual category view
 + author view
-- CRUD comment
++ individual category view
++ categories in post detail
++ logins
++ Add comments
+? Edit comment 
+- Delete comment
+- permissions
 - CRUD article
-- logins
+- CRUD user
 - tests
 - search
 - links for categories with popularity
 - pagination
-- categies in post detail
+- picture handling
+- about page
+- contact page
