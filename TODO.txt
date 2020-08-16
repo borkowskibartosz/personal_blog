@@ -7,14 +7,19 @@ TODO
 + logins
 + Add comments
 + links for categories with popularity
-? Edit comment 
-- Delete comment
++ Edit comment
++ Delete comment
 - permissions
 - CRUD article
 - CRUD user
-- tests
 - search
 - pagination
+- profile view
+    - edit name, last_name
+    - edit picture
+    - all comments
+    - all posts
 - picture handling
+- tests
 - about page
 - contact page

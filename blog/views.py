@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, FormView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.views import View
 from django.db.models import Count
 from .models import Post, Comment, Category
@@ -67,7 +67,15 @@ class CategoriesView(TemplateView):
         categories_by_post_no = Category.objects.all().annotate(post_count=Count('category_posts')).order_by('post_count').reverse().values('id', 'name', 'post_count')
         ctx = {'categories_by_post_no': categories_by_post_no}
         return ctx
-     
+
+class CommentsView(TemplateView):
+    template_name = 'comments.html'
+
+    def get_context_data(self, **kwargs):
+        comments_by_logged_user = Comment.objects.filter(author=self.request.user)
+        ctx = {'comments_by_logged_user': comments_by_logged_user}
+        return ctx
+
 class CategoryView(TemplateView):
     template_name = 'category.html'
     def get_context_data(self, category_id):
@@ -76,3 +84,23 @@ class CategoryView(TemplateView):
         posts = Post.objects.filter(categories__id=category_id)
         return {'cat': cat,
                 'posts': posts}
+
+class CommentUpdate(UpdateView):
+    model = Comment
+    fields = ['content']
+    template_name_suffix = '_update_form'
+    success_url="/categories"
+
+    def get_success_url(self):
+        return reverse_lazy('main')
+
+    # def get_context_data(self, **kwargs):
+    #     # context = super().get_context_data(**kwargs)
+    #     # user_comment = get_object_or_404(Comment, id=pk)
+    #     ctx = {'user_comment': user_comment}
+    #     return ctx
+
+class DeleteComment(DeleteView):
+    model = Comment
+    def get_success_url(self):
+        return self.request.GET.get('next', reverse_lazy('main'))

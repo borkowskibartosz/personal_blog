@@ -19,7 +19,7 @@ from django.contrib import admin
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import PostView, MainView, AuthorView, CategoriesView, CategoryView
+from blog.views import PostView, MainView, AuthorView, CategoriesView, CategoryView, CommentUpdate, CommentsView, DeleteComment
 from django.views.decorators.http import require_POST
 
 urlpatterns = [
@@ -29,6 +29,10 @@ urlpatterns = [
     path('author/<str:post_author>/', AuthorView.as_view(), name = 'author_posts'),
     path('categories/', CategoriesView.as_view(), name='categories'),
     path('category/<int:category_id>', CategoryView.as_view(), name='category_details'),
+    path('comments/', CommentsView.as_view(), name='comments'),
+    path('comment/edit/<int:pk>/', CommentUpdate.as_view(), name='update_comment'),
+    path('comments/delete/<int:pk>/', DeleteComment.as_view(), name='delete_comment'),
     path('accounts/', include('django.contrib.auth.urls')),
+
     # path('comment_form/', require_POST(CommentFormView.as_view()), name='comment_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

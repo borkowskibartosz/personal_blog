@@ -61,18 +61,21 @@
         {% for comment in comments %}
 
         <!-- Single Comment -->
-        {% comment %} TODO: CRUD for comment {% endcomment %}
         <div class="media mb-4">
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
             <h5 class="mt-0">{{comment.author}} </h5>
             {{comment.content}}
+            {% if user.username == comment.author.username %}
+            <div class="d-flex flex-row-reverse">
+            <div class="p-2"><a class="btn btn-primary" href="{% url 'update_comment' pk=comment.id %}?next={{request.path}}" role="button">Edit</a></div>
+            <div class="p-2"><a class="btn btn-danger" href="{% url 'delete_comment' pk=comment.id %}?next={{request.path}}" role="button">Delete</a></div>
+            </div>
+            {% endif %}
           </div>
         </div>
 
         {% endfor %}
-
-
       </div>
 
 {% endblock %}

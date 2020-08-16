@@ -1,11 +1,24 @@
+{% extends 'base.html' %}
 {% load static %}
-<h2>Login</h2>
-  <span class="py-5 bg-dark">
-    <div class="container">
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-secondary" type="submit">Login</button>
-</form>
-  </div>
-  </span>
+{% block content %}
+
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-8">
+       <div class="card my-4">
+          <h5 class="card-header">Login</h5>
+          <div class="card-body">
+          <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-secondary" type="submit">Login</button>
+          </form>
+          </div>
+        </div>
+        </form>
+      </div>
+
+
+{% endblock content %}
