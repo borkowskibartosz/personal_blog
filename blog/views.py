@@ -64,7 +64,7 @@ class CategoriesView(TemplateView):
     template_name = 'categories.html'
     
     def get_context_data(self):
-        categories_by_post_no = Category.objects.all().annotate(post_count=Count('category_posts')).values('id', 'name', 'post_count')
+        categories_by_post_no = Category.objects.all().annotate(post_count=Count('category_posts')).order_by('post_count').reverse().values('id', 'name', 'post_count')
         ctx = {'categories_by_post_no': categories_by_post_no}
         return ctx
      

@@ -85,32 +85,44 @@
 
         <!-- Categories Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Categories</h5>
+          <h5 class="card-header">Top Categories</h5>
           <div class="card-body">
             <div class="row">
               <div class="col-lg-6">
                 <ul class="list-unstyled mb-0">
                   <li>
-                    <a href="#">General</a>
+                    {% if top_categories.0 %}
+                    <a href="{% url 'category_details' category_id=top_categories.0.id%}">{{top_categories.0.name}}  <span class="badge badge-primary">{{top_categories.0.post_count}}</span></a>
+                    {% endif %}
                   </li>
                   <li>
-                    <a href="#">Data Science</a>
+                    {%if top_categories.1 %}
+                    <a href="{% url 'category_details' category_id=top_categories.1.id%}">{{top_categories.1.name}}  <span class="badge badge-primary">{{top_categories.1.post_count}}</span></a>
+                    {%endif%}
                   </li>
                   <li>
-                    <a href="#">Freebies</a>
+                    {%if top_categories.2 %}
+                    <a href="{% url 'category_details' category_id=top_categories.2.id%}">{{top_categories.2.name}}  <span class="badge badge-primary">{{top_categories.2.post_count}}</span></a>
+                    {% endif %}
                   </li>
                 </ul>
               </div>
               <div class="col-lg-6">
                 <ul class="list-unstyled mb-0">
                   <li>
-                    <a href="#">JavaScript</a>
+                    {%if top_categories.3 %}
+                    <a href="{% url 'category_details' category_id=top_categories.3.id%}">{{top_categories.3.name}}  <span class="badge badge-primary">{{top_categories.3.post_count}}</span></a>
+                    {%endif%}
                   </li>
                   <li>
-                    <a href="#">CSS</a>
+                    {%if top_categories.4 %}                  
+                    <a href="{% url 'category_details' category_id=top_categories.4.id%}">{{top_categories.4.name}}  <span class="badge badge-primary">{{top_categories.4.post_count}}</span></a>
+                    {%endif%}
                   </li>
                   <li>
-                    <a href="#">Tutorials</a>
+                    {% if top_categories.5 %}  
+                    <a href="#">{{top_categories.5.name}}  <span class="badge badge-primary">{{top_categories.5.post_count}}</span></a>
+                    {% endif %}
                   </li>
                 </ul>
               </div>

@@ -6,6 +6,7 @@ TODO
 + categories in post detail
 + logins
 + Add comments
++ links for categories with popularity
 ? Edit comment 
 - Delete comment
 - permissions
@@ -13,7 +14,6 @@ TODO
 - CRUD user
 - tests
 - search
-- links for categories with popularity
 - pagination
 - picture handling
 - about page
