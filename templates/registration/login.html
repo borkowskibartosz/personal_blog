@@ -7,14 +7,18 @@
     <div class="row">
 
       <div class="col-md-8">
-       <div class="card my-4">
+       <div class="card my-4" style="text-align:center">
           <h5 class="card-header">Login</h5>
           <div class="card-body">
           <form method="post">
           {% csrf_token %}
           {{ form.as_p }}
+          <div class="d-inline-flex p-2 " ><a class="btn btn-secondary" href="#" role="button">Reset password</a></div>
           <button class="btn btn-secondary" type="submit">Login</button>
           </form>
+          <hr>
+          
+          <a class="btn btn-success" href="{% url 'signup' %}?next={{request.path}}" role="button">Create User</a>
           </div>
         </div>
         </form>

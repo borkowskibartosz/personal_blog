@@ -1,20 +1,20 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
+from django.contrib.auth.views import LoginView
 from django.views import View
 from django.db.models import Count
 from .models import Post, Comment, Category
-from .forms import CommentForm
+from .forms import CommentForm, UserSignUpForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-
 
 class MainView(TemplateView):
     template_name = 'main.html'
     def get_context_data(self):
         return {'posts': Post.objects.filter(status=0)}
-
 
 class PostView(FormMixin, DetailView):
     template_name = 'post_details.html'
@@ -37,7 +37,6 @@ class PostView(FormMixin, DetailView):
         self.object = self.get_object()
         form = CommentForm(request.POST)
         # form = self.get_form()
-        print('####')
         if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user
@@ -104,3 +103,12 @@ class DeleteComment(DeleteView):
     model = Comment
     def get_success_url(self):
         return self.request.GET.get('next', reverse_lazy('main'))
+
+class SignupView(CreateView):
+    form_class = UserSignUpForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
+
+class MyLoginView(LoginView):
+    template_name = 'registration/login.html'
+    success_url = reverse_lazy('main')

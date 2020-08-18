@@ -7,11 +7,13 @@ TODO
 + logins
 + Add comments
 + links for categories with popularity
++ Create comment
 + Edit comment
 + Delete comment
-- permissions
+- picture handling
 - CRUD article
-- CRUD user
+- CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
+- permissions
 - search
 - pagination
 - profile view
@@ -19,7 +21,7 @@ TODO
     - edit picture
     - all comments
     - all posts
-- picture handling
+- reset password
 - tests
 - about page
 - contact page
