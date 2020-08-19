@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8 text-center" >
+      <img class="rounded-circle border" src="{{user.userprofile.avatar.url}}" style="width:200px" alt="">
+
+      {% if user.userprofile.avatar.url %}
+      <img class="rounded border" src="{{user.userprofile.avatar.url}}">
+      {% elif user.first_name and user.last_name %}
+      <img class="rounded" src="https://avatars.dicebear.com/api/initials/{{user.first_name}}_{{user.last_name}}.svg" style="width:200px" alt="">
+      {% else %}
+      <img class="rounded" src="https://avatars.dicebear.com/api/initials/{{user.username}}.svg" style="width:200px" alt="">
+      {% endif %}
+
+
+
+
+
+      <h2 class="my-4"><strong>{{user.username}}</strong></h2>
+
+      <table class="table table-hover">
+      <tbody>
+      <tr>
+      <th scope="row">First Name</th>
+      <td scope="row">{{user.first_name}}</th>
+      <td scope="row"><a class="btn btn-warning" href="#" role="button">Edit</a></td>      
+      </tr>
+      <tr>
+      <th scope="row">Last Name</th>
+      <td scope="row">{{user.last_name}}</th>
+      <td scope="row"><a class="btn btn-warning" href="#" role="button">Edit</a></td>      
+
+      </tr>
+      <tr>
+      <th scope="row">E-mail</th>
+      <td scope="row">{{user.email}}</th>
+      <td scope="row"></td>      
+
+      </tr>
+      </tbody>
+      </table>
+        <h3 class="my-4"><small>All posts</small></h3>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Posted on</th>
+                <th scope="col">Categories</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr>
+                <th scope="row">{{post.pk}}</th>
+                <td><a href="{% url "post_details" post.slug %}">{{ post.title }}</a></td>
+                <td>{{post.pub_date}}</td>
+                <td>  {% for cat in post.categories.all %} 
+                        {% if forloop.last %}
+                          {{cat.name }} 
+                        {% else %} 
+                          {{cat.name}}, 
+                        {% endif %}
+                      {%endfor%}
+                </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            </table>
+
+        <h3 class="my-4"><small>All comments</small></h3>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Content</th>
+                <th scope="col">Post</th>
+                <th scope="col">Change</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+            {% for comment in comments %}
+                <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td> {{comment.content}} </td>
+                <td> {{comment.source_post.title}}
+                <td> <a class="btn btn-warning" href="{% url 'update_comment' pk=comment.id %}" role="button">Edit</a> <a class="btn btn-danger" href="{% url 'delete_comment' pk=comment.id %}" role="button">Delete</a> </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            </table>
+
+      </div>
+
+
+    
+{% endblock content %}

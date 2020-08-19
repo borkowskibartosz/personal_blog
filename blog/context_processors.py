@@ -1,6 +1,8 @@
 import django
-from .models import Category
+from .models import Category#, ProfilePicture
+from django.contrib.auth.models import User
 from django.db.models import Count
+from django.shortcuts import get_object_or_404
 
 
 def top_categories(request):
@@ -10,3 +12,9 @@ def top_categories(request):
     "top_categories": top_categories
     }
     return ctx
+
+# def profile_picture_url(request):
+#     print(request.user.username)
+#     profile_picture_url = ProfilePicture.objects.get(user__username=request.user.username)
+#     ctx = {'profile_picture_url': profile_picture_url}
+#     return ctx

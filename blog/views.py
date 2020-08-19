@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, FormView, CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.views import View
 from django.db.models import Count
 from .models import Post, Comment, Category
@@ -11,8 +12,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
+
 class MainView(TemplateView):
     template_name = 'main.html'
+    # u = User.objects.get(pk=1) # Get the first user in the system
+    # user_avatar = u.get_profile().avatar.url
+    # print(user_avatar)
+
     def get_context_data(self):
         return {'posts': Post.objects.filter(status=0)}
 
@@ -93,12 +99,6 @@ class CommentUpdate(UpdateView):
     def get_success_url(self):
         return reverse_lazy('main')
 
-    # def get_context_data(self, **kwargs):
-    #     # context = super().get_context_data(**kwargs)
-    #     # user_comment = get_object_or_404(Comment, id=pk)
-    #     ctx = {'user_comment': user_comment}
-    #     return ctx
-
 class DeleteComment(DeleteView):
     model = Comment
     def get_success_url(self):
@@ -109,6 +109,12 @@ class SignupView(CreateView):
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
-class MyLoginView(LoginView):
-    template_name = 'registration/login.html'
-    success_url = reverse_lazy('main')
+class ProfileView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy('login')
+    template_name = 'profile.html'
+    def get_context_data(self):
+        u = self.request.user #.get_profile()
+        posts = Post.objects.filter(author__id=u.pk)
+        comments = Comment.objects.filter(author__pk=u.pk)
+        return {'posts': posts,
+                'comments': comments}

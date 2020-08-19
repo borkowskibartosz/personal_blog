@@ -18,7 +18,7 @@
           <img class="card-img-top" src="{% static '750x300.png' %}" alt="Card image cap">
           <div class="card-body">
             <h2 class="card-title">{{post.title}}</h2>
-            <p class="card-text">{{post.summary|force_escape}}...</p>
+            <p class="card-text">{{post.summary|striptags}}...</p>
             <a href="{% url 'post_details' post.slug %}" class="btn btn-primary">Read More &rarr;</a>
 
           </div>
