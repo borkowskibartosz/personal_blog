@@ -10,18 +10,19 @@ TODO
 + Create comment
 + Edit comment
 + Delete comment
-- profile view
-    - edit name, last_name
-    - edit picture
++ profile view
+    + edit name, last_name
+    + edit picture
     + all comments
     + all posts
-- picture handling
-- CRUD article
+- CRUD article (!!!)
+    - picture handling
 - CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
 - permissions
 - search
 - pagination
-- reset password
 - tests
 - about page
 - contact page  https://learndjango.com/tutorials/django-email-contact-form
+
+- post rating (?)

@@ -3,10 +3,10 @@ from django.views.generic import TemplateView, FormView, CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
 from django.db.models import Count
-from .models import Post, Comment, Category
+from .models import Post, Comment, Category, UserProfile
 from .forms import CommentForm, UserSignUpForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -21,6 +21,11 @@ class MainView(TemplateView):
 
     def get_context_data(self):
         return {'posts': Post.objects.filter(status=0)}
+
+class CreatePost(CreateView):
+    model = Post
+    fields = ('title', 'author', 'content', 'status', 'photo', 'categories')
+    success_url = reverse_lazy("index")
 
 class PostView(FormMixin, DetailView):
     template_name = 'post_details.html'
@@ -90,19 +95,26 @@ class CategoryView(TemplateView):
         return {'cat': cat,
                 'posts': posts}
 
-class CommentUpdate(UpdateView):
+class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ['content']
     template_name_suffix = '_update_form'
-    success_url="/categories"
+    success_url="main"
 
-    def get_success_url(self):
-        return reverse_lazy('main')
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
-class DeleteComment(DeleteView):
+class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    login_url = reverse_lazy('login')
+
     model = Comment
     def get_success_url(self):
         return self.request.GET.get('next', reverse_lazy('main'))
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
 class SignupView(CreateView):
     form_class = UserSignUpForm
@@ -118,3 +130,27 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         comments = Comment.objects.filter(author__pk=u.pk)
         return {'posts': posts,
                 'comments': comments}
+
+class UpdateAvatar(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    login_url = reverse_lazy('login')
+    model = UserProfile
+    fields = ('avatar',)
+    template_name_suffix = '_update_form'
+    success_url = reverse_lazy('main')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user == self.request.user
+
+class UpdateProfile(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    login_url = reverse_lazy('login')
+    # form_class = UserUpdateForm
+    model = User
+    fields = ('username', 'first_name','last_name', 'email')
+    template_name_suffix = '_update_form'
+    success_url = reverse_lazy('main')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.pk == self.request.user.pk
+

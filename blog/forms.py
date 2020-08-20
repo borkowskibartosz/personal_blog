@@ -2,7 +2,7 @@ from django import forms
 from .models import Comment
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, UserChangeForm
 from django.core.exceptions import ValidationError
 
 class CommentForm(forms.ModelForm):
@@ -129,3 +129,7 @@ class UserSignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+
+# class UserUpdateForm(forms.ModelForm):
+#     pass

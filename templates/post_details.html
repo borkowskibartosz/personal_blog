@@ -62,7 +62,16 @@
 
         <!-- Single Comment -->
         <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+
+          {% comment %} <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt=""> {% endcomment %}
+          {% if comment.author.userprofile.avatar.url %}
+          <img class="d-flex mr-3 rounded-circle border" style="width:50px" src="{{comment.author.userprofile.avatar.url}}">
+          {% elif comment.author.first_name and comment.author.last_name %}
+          <img class="d-flex mr-3 rounded-circle" src="https://avatars.dicebear.com/api/initials/{{comment.author.first_name.0}}_{{comment.author.last_name.0}}.svg" style="width:50px" alt="">
+          {% else %}
+          <img class="d-flex mr-3 rounded-circle" src="https://avatars.dicebear.com/api/initials/{{comment.author.username.0}}.svg" style="width:50px" alt="">
+          {% endif %}
+
           <div class="media-body">
             <h5 class="mt-0">{{comment.author}} </h5>
             {{comment.content}}
