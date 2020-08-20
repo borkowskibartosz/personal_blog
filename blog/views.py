@@ -6,8 +6,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
 from django.db.models import Count
-from .models import Post, Comment, Category, UserProfile
-from .forms import CommentForm, UserSignUpForm
+from .models import Post, Comment, Category, UserProfile, Photo
+from .forms import CommentForm, UserSignUpForm, AddPhotoForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -149,8 +149,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         u = self.request.user #.get_profile()
         posts = Post.objects.filter(author__id=u.pk)
         comments = Comment.objects.filter(author__pk=u.pk)
+        photos = Photo.objects.filter(uploaded_by__id=u.pk)
         return {'posts': posts,
-                'comments': comments}
+                'comments': comments,
+                'photos': photos}
 
 class UpdateAvatar(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = reverse_lazy('login')
@@ -175,3 +177,27 @@ class UpdateProfile(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         obj = self.get_object()
         return obj.pk == self.request.user.pk
 
+class AddPhotoView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
+
+    model = Photo
+    form_class = AddPhotoForm
+    template_name = 'add_photo.html'
+    success_url = reverse_lazy('profile')
+
+    def post(self, request, *args, **kwargs):
+        # self.object = self.get_object()
+        form = AddPhotoForm(request.POST, request.FILES)
+        # form = self.get_form()
+        if form.is_valid():
+            photo = form.save(commit=False)
+            photo.uploaded_by = request.user
+            photo.save()
+
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)            

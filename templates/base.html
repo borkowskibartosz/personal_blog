@@ -55,6 +55,7 @@
               <li class="nav-item">
               <a class="btn btn-primary btn-sm" href="{% url 'logout' %}?next={{request.path}}" role="button">Logout</a>
             {% else %}
+              <li class="nav-item">
               <a class="btn btn-primary btn-sm" href="{% url 'login' %}?next={{request.path}}" role="button">Login</a>
             {% endif %}
               </li>

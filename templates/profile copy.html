@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8 text-center" >
+
+      {% if user.userprofile.avatar %}
+      <img class="rounded border" style="width:200px" src="{{user.userprofile.avatar.url}}">
+      {% elif user.first_name and user.last_name %}
+      <img class="rounded" src="https://avatars.dicebear.com/api/initials/{{user.first_name.0}}_{{user.last_name.0}}.svg" style="width:200px" alt="">
+      {% else %}
+      <img class="rounded" src="https://avatars.dicebear.com/api/initials/{{user.username.0}}.svg" style="width:200px" alt="">
+      {% endif %}
+
+      <h2 class="my-4"><strong>{{user.username}}</strong></h2>
+      <h3 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h3>
+
+      <table class="table table-hover">
+      <tbody>
+      <tr>
+      <th scope="row">First Name</th>
+      <td scope="row">{% if user.first_name %}{{user.first_name}}{%else%}No data{%endif%}</th>
+      <td scope="row"></td>        
+      </tr>
+      <tr>
+      <th scope="row">Last Name</th>
+      <td scope="row">{% if user.last_name %}{{user.last_name}}{%else%}No data{%endif%}</th>
+      <td scope="row"></td>       
+
+      </tr>
+      <tr>
+      <th scope="row">E-mail</th>
+      <td scope="row">{% if user.email%}{{user.email}}{%else%}No data{%endif%}</th>
+      <td scope="row"></td>      
+
+      </tr>
+      </tbody>
+      </table>
+
+
+        <h2 class="my-4"><strong>All posts <a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button" atl="Add a post">Add new post</a> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}" role="button" atl="Add a photo">Add new photo</a></strong></h2>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Posted on</th>
+                <th scope="col">Status</th>
+                <th scope="col">Change</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr>
+                <th scope="row">{{post.pk}}</th>
+                <td><a href="{% url "post_details" post.slug %}">{{ post.title }}</a></td>
+                <td>{{ post.pub_date }}</td>
+                <td>{{ post.get_status_display }}</td>
+                <td>  <a class="btn btn-info btn-sm" href="{% url 'update-post' post.slug %}" role="button">Edit</a> <a class="btn btn-danger btn-sm" href="{% url 'delete-post' post.slug %}" role="button">Delete</a></td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            </table>
+
+        <h2 class="my-4"><strong>All comments</strong></h2>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Content</th>
+                <th scope="col">Post</th>
+                <th scope="col">Change</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+            {% for comment in comments %}
+                <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td> {{comment.summary}}...</td>
+                <td> <a href="{% url "post_details" comment.source_post.slug %}">{{ comment.source_post.title }}</a> </td>
+                <td> <a class="btn btn-info btn-sm" href="{% url 'update_comment' pk=comment.id %}" role="button">Edit</a> <a class="btn btn-danger btn-sm" href="{% url 'delete_comment' pk=comment.id %}" role="button">Delete</a> </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            </table>
+
+ 
+        <h2 class="my-4"><strong>All pictures</strong></h2>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Description</th>
+                <th scope="col">Thumbnail</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                {% for picture in photos %}
+                <th scope="row">{{forloop.counter}}</th>
+                <td> {{picture.description}} </td>
+      
+                <td> <img class="rounded border" style="height:50px" src="{{MEDIA_URL}}/media/{{picture.image}}"> </td>
+                {% endfor %}
+               </tr>
+
+            </tbody>
+            </table>
+
+      </div>
+
+
+    
+{% endblock content %}

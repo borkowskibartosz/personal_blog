@@ -19,7 +19,7 @@ from django.contrib import admin
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import DeletePost, PostUpdate, CreatePost, UpdateProfile, UpdateAvatar, ProfileView, SignupView, PostView, MainView, AuthorView, CategoriesView, CategoryView, CommentUpdate, CommentsView, DeleteComment
+from blog.views import AddPhotoView, DeletePost, PostUpdate, CreatePost, UpdateProfile, UpdateAvatar, ProfileView, SignupView, PostView, MainView, AuthorView, CategoriesView, CategoryView, CommentUpdate, CommentsView, DeleteComment
 from django.views.decorators.http import require_POST
 
 urlpatterns = [
@@ -36,10 +36,11 @@ urlpatterns = [
     path('comment/edit/<int:pk>/', CommentUpdate.as_view(), name='update_comment'),
     path('comments/delete/<int:pk>/', DeleteComment.as_view(), name='delete_comment'),
     path('signup/', SignupView.as_view(), name='signup'),
-    path('profile/', ProfileView.as_view(), name='profile'),
+    path('accounts/profile/', ProfileView.as_view(), name='profile'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('update_avatar/<int:pk>/', UpdateAvatar.as_view(), name='update-avatar'),
     path('update_profile/<int:pk>/', UpdateProfile.as_view(), name='update-profile'),
+    path('add_photo/', AddPhotoView.as_view(), name='add-photo'),
     # path('accounts/login/', MyLoginView.as_view(), name='login'),
     # path('comment_form/', require_POST(CommentFormView.as_view()), name='comment_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

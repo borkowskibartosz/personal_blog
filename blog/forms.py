@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment
+from .models import Comment, Photo
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, UserChangeForm
@@ -133,3 +133,12 @@ class UserSignUpForm(UserCreationForm):
 
 # class UserUpdateForm(forms.ModelForm):
 #     pass
+
+class AddPhotoForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        widgets = {
+          'description': forms.TextInput(attrs={'input_type': 'text'}),
+          'image': forms.FileInput()
+        }
+        exclude = ['uploaded_by']

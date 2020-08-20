@@ -11,10 +11,6 @@ TODO
 + Edit comment
 + Delete comment
 + profile view
-    + edit name, last_name
-    + edit picture
-    + all comments
-    + all posts
 - CRUD article
     - update forms
     - picture handling

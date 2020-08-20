@@ -19,6 +19,7 @@
       {% endif %}
 
       <h2 class="my-4"><strong>{{user.username}}</strong></h2>
+      <h3 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h3>
 
       <table class="table table-hover">
       <tbody>
@@ -42,9 +43,8 @@
       </tbody>
       </table>
 
-      <h2 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h2>
 
-        <h3 class="my-4"><small>All posts <a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button" atl="Add a post">Add new</a></small></h3>
+        <h2 class="my-4"><strong>All posts <a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button" atl="Add a post">Add new post</a> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}" role="button" atl="Add a photo">Add new photo</a></strong></h2>
             <table class="table table-hover">
             <thead>
                 <tr>
@@ -69,7 +69,7 @@
             </tbody>
             </table>
 
-        <h3 class="my-4"><small>All comments</a></small></h3>
+        <h2 class="my-4"><strong>All comments</strong></h2>
             <table class="table table-hover">
             <thead>
                 <tr>
@@ -90,6 +90,30 @@
                 </tr>
 
             {% endfor %}
+            </tbody>
+            </table>
+
+ 
+        <h2 class="my-4"><strong>All pictures</strong></h2>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Description</th>
+                <th scope="col">Thumbnail</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                {% for picture in photos %}
+                <th scope="row">{{forloop.counter}}</th>
+                <td> {{picture.description}} </td>
+      
+                <td> <img class="rounded border" style="height:50px" src="{{MEDIA_URL}}/media/{{picture.image}}"> </td>
+                {% endfor %}
+               </tr>
+
             </tbody>
             </table>
 
