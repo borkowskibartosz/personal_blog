@@ -9,7 +9,7 @@
       <!-- Blog Entries Column -->
       <div class="col-md-8">
        <div class="card my-4">
-          <h5 class="card-header">Create Post</h5>
+          <h5 class="card-header">Update Post</h5>
           <div class="card-body">
             <form method='POST'>
               {% csrf_token %}
@@ -17,8 +17,8 @@
               {{form.as_p}}
                 {% comment %} <textarea class="form-control" rows="3" name='content'></textarea>  {% endcomment %}
               {% comment %} <textarea class="form-control" name="content" cols="40" rows="10" required="" id="id_content">{{object.content}}</textarea> {% endcomment %}
-              </div>
               <button type="submit" class="btn btn-primary" >Update</button>
+              </div>
             </form>
           </div>
         </div>

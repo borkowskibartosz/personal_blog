@@ -19,15 +19,17 @@ from django.contrib import admin
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import CreatePost, UpdateProfile, UpdateAvatar, ProfileView, SignupView, PostView, MainView, AuthorView, CategoriesView, CategoryView, CommentUpdate, CommentsView, DeleteComment
+from blog.views import DeletePost, PostUpdate, CreatePost, UpdateProfile, UpdateAvatar, ProfileView, SignupView, PostView, MainView, AuthorView, CategoriesView, CategoryView, CommentUpdate, CommentsView, DeleteComment
 from django.views.decorators.http import require_POST
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('', MainView.as_view(), name='main'),
     path('post/<slug:post_slug>/', PostView.as_view(), name='post_details'),
+    path('create_post/', CreatePost.as_view(), name='create-post'),
+    path('post/edit/<slug:slug>/', PostUpdate.as_view(), name='update-post'),
+    path('post/delete/<slug:slug>/', DeletePost.as_view(), name='delete-post'),
     path('author/<str:post_author>/', AuthorView.as_view(), name = 'author_posts'),
-    path('create_post/', CreatePost.as_view(), name='create_post'),
     path('categories/', CategoriesView.as_view(), name='categories'),
     path('category/<int:category_id>', CategoryView.as_view(), name='category_details'),
     path('comments/', CommentsView.as_view(), name='comments'),

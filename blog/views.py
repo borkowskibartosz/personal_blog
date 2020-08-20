@@ -27,6 +27,27 @@ class CreatePost(CreateView):
     fields = ('title', 'author', 'content', 'status', 'photo', 'categories')
     success_url = reverse_lazy("index")
 
+class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content', 'status', 'photo', 'categories']
+    template_name_suffix = '_update_form'
+    success_url="main"
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
+class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    login_url = reverse_lazy('login')
+
+    model = Post
+    def get_success_url(self):
+        return self.request.GET.get('next', reverse_lazy('main'))
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
 class PostView(FormMixin, DetailView):
     template_name = 'post_details.html'
     slug_url_kwarg = 'post_slug'

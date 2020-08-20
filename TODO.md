@@ -15,7 +15,8 @@ TODO
     + edit picture
     + all comments
     + all posts
-- CRUD article (!!!)
+- CRUD article
+    - update forms
     - picture handling
 - CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
 - permissions
@@ -26,3 +27,4 @@ TODO
 - contact page  https://learndjango.com/tutorials/django-email-contact-form
 
 - post rating (?)
+

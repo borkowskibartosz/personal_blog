@@ -9,18 +9,24 @@
 
       <!-- Post Content Column -->
       <div class="col-lg-8">
+           {% if user.username == post.author.username %}
+            <div class="d-flex flex-row-reverse">
+            <div class="p-2"><a class="btn btn-danger btn-sm" href="{% url 'delete-post' slug=post.slug %}?next={{request.path}}" role="button">Delete Post</a></div>
+            <div class="p-2"><a class="btn btn-primary btn-sm" href="{% url 'update-post' slug=post.slug %}?next={{request.path}}" role="button">Edit Post</a></div>
+            </div>
+            {% endif %}
 
         <!-- Title -->
         <h1 class="mt-4">{{post.title}}</h1>
-
         <!-- Author -->
         <p class="lead">
           by
           <a href="{% url 'author_posts' post.author %}">{{post.author}}</a>
+ 
         </p>
         <p>
           {%for category in post.categories.all%}
-          <button type="button" class="btn btn-secondary">{{category.name}}</button>
+          <button type="button" class="btn btn-secondary btn-sm">{{category.name}}</button>
           {% endfor %}
         </p>
         <hr>
@@ -64,7 +70,7 @@
         <div class="media mb-4">
 
           {% comment %} <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt=""> {% endcomment %}
-          {% if comment.author.userprofile.avatar.url %}
+          {% if comment.author.userprofile.avatar %}
           <img class="d-flex mr-3 rounded-circle border" style="width:50px" src="{{comment.author.userprofile.avatar.url}}">
           {% elif comment.author.first_name and comment.author.last_name %}
           <img class="d-flex mr-3 rounded-circle" src="https://avatars.dicebear.com/api/initials/{{comment.author.first_name.0}}_{{comment.author.last_name.0}}.svg" style="width:50px" alt="">
@@ -77,8 +83,8 @@
             {{comment.content}}
             {% if user.username == comment.author.username %}
             <div class="d-flex flex-row-reverse">
-            <div class="p-2"><a class="btn btn-primary" href="{% url 'update_comment' pk=comment.id %}?next={{request.path}}" role="button">Edit</a></div>
-            <div class="p-2"><a class="btn btn-danger" href="{% url 'delete_comment' pk=comment.id %}?next={{request.path}}" role="button">Delete</a></div>
+            <div class="p-2"><a class="btn btn-danger btn-sm" href="{% url 'delete_comment' pk=comment.id %}?next={{request.path}}" role="button">Delete Comment</a></div>
+            <div class="p-2"><a class="btn btn-primary btn-sm" href="{% url 'update_comment' pk=comment.id %}?next={{request.path}}" role="button">Edit Comment</a></div>
             </div>
             {% endif %}
           </div>

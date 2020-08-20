@@ -42,15 +42,16 @@
       </tbody>
       </table>
 
-      <h2 class="my-4"><a class="btn btn-info" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h2>
+      <h2 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h2>
 
-        <h3 class="my-4"><small>All posts</small></h3>
+        <h3 class="my-4"><small>All posts <a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button" atl="Add a post">Add new</a></small></h3>
             <table class="table table-hover">
             <thead>
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Posted on</th>
+                <th scope="col">Status</th>
                 <th scope="col">Change</th>
                 </tr>
             </thead>
@@ -59,15 +60,16 @@
                 <tr>
                 <th scope="row">{{post.pk}}</th>
                 <td><a href="{% url "post_details" post.slug %}">{{ post.title }}</a></td>
-                <td>{{post.pub_date}}</td>
-                <td>  <a class="btn btn-info" href="#" role="button">Edit</a> <a class="btn btn-danger" href="#" role="button">Delete</a></td>
+                <td>{{ post.pub_date }}</td>
+                <td>{{ post.get_status_display }}</td>
+                <td>  <a class="btn btn-info btn-sm" href="{% url 'update-post' post.slug %}" role="button">Edit</a> <a class="btn btn-danger btn-sm" href="{% url 'delete-post' post.slug %}" role="button">Delete</a></td>
                 </tr>
 
             {% endfor %}
             </tbody>
             </table>
 
-        <h3 class="my-4"><small>All comments</small></h3>
+        <h3 class="my-4"><small>All comments</a></small></h3>
             <table class="table table-hover">
             <thead>
                 <tr>
@@ -82,9 +84,9 @@
             {% for comment in comments %}
                 <tr>
                 <th scope="row">{{forloop.counter}}</th>
-                <td> {{comment.content}}</td>
+                <td> {{comment.summary}}...</td>
                 <td> <a href="{% url "post_details" comment.source_post.slug %}">{{ comment.source_post.title }}</a> </td>
-                <td> <a class="btn btn-info" href="{% url 'update_comment' pk=comment.id %}" role="button">Edit</a> <a class="btn btn-danger" href="{% url 'delete_comment' pk=comment.id %}" role="button">Delete</a> </td>
+                <td> <a class="btn btn-info btn-sm" href="{% url 'update_comment' pk=comment.id %}" role="button">Edit</a> <a class="btn btn-danger btn-sm" href="{% url 'delete_comment' pk=comment.id %}" role="button">Delete</a> </td>
                 </tr>
 
             {% endfor %}

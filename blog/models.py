@@ -61,6 +61,9 @@ class Comment(models.Model):
     class Meta:
         ordering = ['-created_on']
 
+    def summary(self):
+        return self.content[:30]
+
     def __str__(self):
         return f'{self.content[:10]} by {self.author.username}'
 
