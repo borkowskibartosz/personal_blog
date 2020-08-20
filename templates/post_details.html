@@ -37,8 +37,11 @@
         <hr>
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
-
+        {% if attached_photos %}
+        <img class="img-fluid rounded" src="{{attached_photos.0.image.url}}" alt="">
+        {% else %}
+        <img class="img-fluid rounded" src="https://via.placeholder.com/750x300.png" alt="">
+        {% endif %}
         <hr>
 
         {{post.content|safe}}

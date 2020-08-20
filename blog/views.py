@@ -15,9 +15,6 @@ from django.urls import reverse_lazy
 
 class MainView(TemplateView):
     template_name = 'main.html'
-    # u = User.objects.get(pk=1) # Get the first user in the system
-    # user_avatar = u.get_profile().avatar.url
-    # print(user_avatar)
 
     def get_context_data(self):
         return {'posts': Post.objects.filter(status=0)}
@@ -29,9 +26,9 @@ class CreatePost(CreateView):
 
 class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content', 'status', 'photo', 'categories']
+    fields = ['title', 'content', 'status', 'photos', 'categories']
     template_name_suffix = '_update_form'
-    success_url="main"
+    success_url=reverse_lazy("main")
 
     def test_func(self):
         obj = self.get_object()
@@ -61,14 +58,17 @@ class PostView(FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         comments = Comment.objects.filter(source_post__pk=context['post'].pk)
+        current_post = Post.objects.get(slug=self.object.slug)
+        attached_photos = current_post.photos.all()
+
         context['comments'] = comments
-        context['form'] = CommentForm(initial={'source_post': self.object, 'author': self.request.user})        
+        context['form'] = CommentForm(initial={'source_post': self.object, 'author': self.request.user})     
+        context['attached_photos']= attached_photos
         return context
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = CommentForm(request.POST)
-        # form = self.get_form()
         if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user

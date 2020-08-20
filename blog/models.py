@@ -36,7 +36,7 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     content = models.TextField(verbose_name='Post content')
     status = models.IntegerField(choices=STATUS, default=1)
-    photo = models.ManyToManyField(Photo, related_name='photos', blank=True)
+    photos = models.ManyToManyField(Photo, related_name='posts', blank=True)
     categories = models.ManyToManyField(Category, related_name='category_posts')
 
     class Meta:

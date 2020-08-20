@@ -18,8 +18,12 @@
       <img class="rounded" src="https://avatars.dicebear.com/api/initials/{{user.username.0}}.svg" style="width:200px" alt="">
       {% endif %}
 
-      <h2 class="my-4"><strong>{{user.username}}</strong></h2>
-      <h3 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h3>
+
+        <div class="card my-4">
+        <h5 class="card-header"><strong>{{user.username}}</strong></h5>
+        <h5 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h5>
+        <div class="card-body">
+        <div class="d-flex justify-content-around"> 
 
       <table class="table table-hover">
       <tbody>
@@ -32,19 +36,26 @@
       <th scope="row">Last Name</th>
       <td scope="row">{% if user.last_name %}{{user.last_name}}{%else%}No data{%endif%}</th>
       <td scope="row"></td>       
-
       </tr>
       <tr>
       <th scope="row">E-mail</th>
       <td scope="row">{% if user.email%}{{user.email}}{%else%}No data{%endif%}</th>
       <td scope="row"></td>      
-
       </tr>
       </tbody>
       </table>
+        </div>
+        </div>
+        </div>
 
 
-        <h2 class="my-4"><strong>All posts <a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button" atl="Add a post">Add new post</a> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}" role="button" atl="Add a photo">Add new photo</a></strong></h2>
+<div class="card my-4">
+    <h5 class="card-header"><strong>All posts</strong></h5>
+        <h5 class="my-4"><a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button" atl="Add a post">Add new post</a> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}" role="button" atl="Add a photo">Add new photo</a></h5>
+
+    <div class="card-body">
+        <div class="d-flex justify-content-around"> 
+
             <table class="table table-hover">
             <thead>
                 <tr>
@@ -69,8 +80,16 @@
             </tbody>
             </table>
 
-        <h2 class="my-4"><strong>All comments</strong></h2>
-            <table class="table table-hover">
+        </div>
+    </div>
+</div>
+
+        <div class="card my-4">
+        <h5 class="card-header"><strong>All comments</strong></h5>
+        <div class="card-body">
+        <div class="d-flex justify-content-around"> 
+
+           <table class="table table-hover">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -92,9 +111,16 @@
             {% endfor %}
             </tbody>
             </table>
+        </div>
+        </div>
+        </div>
 
- 
-        <h2 class="my-4"><strong>All pictures</strong></h2>
+
+        <div class="card my-4">
+        <h5 class="card-header"><strong>All pictures</strong></h5>
+        <div class="card-body">
+        <div class="d-flex justify-content-around"> 
+
             <table class="table table-hover">
             <thead>
                 <tr>
@@ -107,7 +133,7 @@
             
                 <tr>
                 {% for picture in photos %}
-                <th scope="row">{{forloop.counter}}</th>
+                <th scope="row">{{picture.id}}</th>
                 <td> {{picture.description}} </td>
       
                 <td> <img class="rounded border" style="height:50px" src="{{MEDIA_URL}}/media/{{picture.image}}"> </td>
@@ -116,6 +142,11 @@
 
             </tbody>
             </table>
+
+        </div>
+        </div>
+        </div>
+
 
       </div>
 

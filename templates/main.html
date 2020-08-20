@@ -15,7 +15,12 @@
         <!-- Blog Post -->
         {% for post in posts %}
         <div class="card mb-4">
-          <img class="card-img-top" src="{% static '750x300.png' %}" alt="Card image cap">
+        {% comment %} {% static '750x300.png' %} {% endcomment %}
+          {% if post.photos.all.0 %}
+          <img class="card-img-top" src="{{post.photos.all.0.image.url}}" alt="Card image cap">
+          {% else %}
+          <img class="card-img-top" src="https://via.placeholder.com/750x250" alt="Card image cap">
+          {% endif %}
           <div class="card-body">
             <h2 class="card-title">{{post.title}}</h2>
             <p class="card-text">{{post.summary|striptags}}...</p>
