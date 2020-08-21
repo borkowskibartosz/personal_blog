@@ -28,7 +28,7 @@
                 <td> <a href="{% url 'author_posts' item.author %}">{{item.author.username}}</a></td>
                 </tr>
           {% empty %}
-              No data
+              <div class='errorlist text-muted'> No post content or post title matched your query. Please try again.</div> 
 
           {% endfor %}
             </tbody>

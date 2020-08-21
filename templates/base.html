@@ -16,7 +16,8 @@
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
-
+  {% comment %} <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet"> {% endcomment %}
+  <script src="https://kit.fontawesome.com/5607aede7f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'about'%}">About</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
@@ -87,7 +88,7 @@
             <div class="input-group">
               <input type="text" name="content" class="form-control" placeholder="Search for...">
               <span class="input-group-append">
-              <button class="btn btn-secondary" type="submit">Go!</button>
+              <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
               </span>
             </div>
           </form> 

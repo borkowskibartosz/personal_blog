@@ -19,7 +19,7 @@ from django.contrib import admin
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import PostSearch, DeletePhoto, AddPhotoView, DeletePost, UpdatePost, CreatePost, UpdateProfile, UpdateAvatar, ProfileView, SignupView, PostView, MainView, AuthorView, CategoriesView, CategoryView, CommentUpdate, CommentsView, DeleteComment
+from blog.views import AboutView, PostSearch, DeletePhoto, AddPhotoView, DeletePost, UpdatePost, CreatePost, UpdateProfile, UpdateAvatar, ProfileView, SignupView, PostView, MainView, AuthorView, CategoriesView, CategoryView, CommentUpdate, CommentsView, DeleteComment
 from django.views.decorators.http import require_POST
 
 urlpatterns = [
@@ -43,6 +43,7 @@ urlpatterns = [
     path('update_profile/<int:pk>/', UpdateProfile.as_view(), name='update-profile'),
     path('add_photo/', AddPhotoView.as_view(), name='add-photo'),
     path('delete_photo/<int:pk>', DeletePhoto.as_view(), name='delete-photo'),
+    path('about', AboutView.as_view(), name='about'),
 
     # path('accounts/login/', MyLoginView.as_view(), name='login'),
     # path('comment_form/', require_POST(CommentFormView.as_view()), name='comment_view'),

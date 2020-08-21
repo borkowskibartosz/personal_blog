@@ -247,3 +247,6 @@ class PostSearch(TemplateView):
         ctx = {"form": form,
                "posts": posts}
         return ctx
+
+class AboutView(TemplateView):
+    template_name = 'about.html'

@@ -21,7 +21,7 @@
 
         <div class="card my-4">
         <h5 class="card-header"><strong>{{user.username}}</strong></h5>
-        <h5 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile</a></h5>
+        <h5 class="my-4"><a class="btn btn-info btn-sm" href="{% url 'update-avatar' pk=user.id %}" role="button">Update Avatar</a> <a class="btn btn-info btn-sm" href="{% url 'update-profile' pk=user.id %}" role="button">Update Profile </a></h5>
         <div class="card-body">
         <div class="d-flex justify-content-around"> 
 
@@ -73,7 +73,7 @@
                 <td><a href="{% url "post_details" post.slug %}">{{ post.title }}</a></td>
                 <td>{{ post.pub_date }}</td>
                 <td>{{ post.get_status_display }}</td>
-                <td>  <a class="btn btn-info btn-sm" href="{% url 'update-post' post.slug %}" role="button">Edit</a> <a class="btn btn-danger btn-sm" href="{% url 'delete-post' post.slug %}" role="button">Delete</a></td>
+                <td>  <a class="btn btn-info btn-sm" href="{% url 'update-post' post.slug %}" role="button"><i class="far fa-edit"></i></a> <a class="btn btn-danger btn-sm" href="{% url 'delete-post' post.slug %}" role="button"><i class="far fa-trash-alt"></i></a></td>
                 </tr>
 
             {% endfor %}
@@ -105,9 +105,8 @@
                 <th scope="row">{{forloop.counter}}</th>
                 <td> {{comment.summary}}...</td>
                 <td> <a href="{% url "post_details" comment.source_post.slug %}">{{ comment.source_post.title }}</a> </td>
-                <td> <a class="btn btn-info btn-sm" href="{% url 'update_comment' pk=comment.id %}" role="button">Edit</a> <a class="btn btn-danger btn-sm" href="{% url 'delete_comment' pk=comment.id %}" role="button">Delete</a> </td>
+                <td> <a class="btn btn-info btn-sm" href="{% url 'update_comment' pk=comment.id %}" role="button"><i class="far fa-edit"></i></a> <a class="btn btn-danger btn-sm" href="{% url 'delete_comment' pk=comment.id %}" role="button"><i class="far fa-trash-alt"></i></a> </td>
                 </tr>
-
             {% endfor %}
             </tbody>
             </table>
@@ -137,7 +136,7 @@
                 <th scope="row">{{picture.id}}</th>
                 <td> {{picture.description}} </td>
                 <td> <img class="rounded border" style="height:50px" src="{{MEDIA_URL}}/media/{{picture.image}}"> </td>
-                <td> <a class="btn btn-danger btn-sm" href="{% url 'delete-photo' picture.id %}?next={{request.path}}" role="button">Delete</a> </td>
+                <td> <a class="btn btn-danger btn-sm" href="{% url 'delete-photo' picture.id %}?next={{request.path}}" role="button"><i class="far fa-trash-alt"></i></a> </td>
                </tr>
                 {% endfor %}
 
