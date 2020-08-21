@@ -4,12 +4,14 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
-from django.views import View
-from django.db.models import Count
-from .models import Post, Comment, Category, UserProfile, Photo
-from .forms import CommentForm, UserSignUpForm, AddPhotoForm
+from django.db.models import Count, Q
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+
+from .models import Post, Comment, Category, UserProfile, Photo
+from .forms import PostSearchForm, CommentForm, UserSignUpForm, AddPhotoForm, UpdatePostForm, CreatePostForm, UpdateUserForm
+from django.views import View
 from django.urls import reverse_lazy
 
 
@@ -19,14 +21,34 @@ class MainView(TemplateView):
     def get_context_data(self):
         return {'posts': Post.objects.filter(status=0)}
 
-class CreatePost(CreateView):
-    model = Post
-    fields = ('title', 'author', 'content', 'status', 'photos', 'categories')
-    success_url = reverse_lazy("index")
+class CreatePost(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
 
-class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content', 'status', 'photos', 'categories']
+    form_class = CreatePostForm
+    success_url = reverse_lazy("main")
+
+    def post(self, request, *args, **kwargs):
+        form = CreatePostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.slug = slugify(post.title, allow_unicode=False)
+            post.author = request.user
+            post.save()
+
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)            
+
+class UpdatePost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    login_url = reverse_lazy('login')
+
+    model = Post
+    form_class = UpdatePostForm
     template_name_suffix = '_update_form'
     success_url=reverse_lazy("main")
 
@@ -167,9 +189,9 @@ class UpdateAvatar(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class UpdateProfile(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = reverse_lazy('login')
-    # form_class = UserUpdateForm
+    form_class = UpdateUserForm
     model = User
-    fields = ('username', 'first_name','last_name', 'email')
+    # fields = ('username', 'first_name','last_name', 'email')
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('main')
 
@@ -201,3 +223,27 @@ class AddPhotoView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)            
+
+class DeletePhoto(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('login')
+
+    model = Photo
+    def get_success_url(self):
+        return self.request.GET.get('next', reverse_lazy('main'))
+
+class PostSearch(TemplateView):
+    template_name = 'post_search.html'
+    def get_context_data(self, **kwargs):
+        if self.request.GET:
+            form = PostSearchForm(self.request.GET)
+            if form.is_valid():
+                posts = Post.objects.filter(Q(title__icontains=form.cleaned_data['content']) | Q(content__icontains=form.cleaned_data['content']))
+            
+            else:
+                posts = []
+        else:
+            form = PostSearchForm()
+            posts = None
+        ctx = {"form": form,
+               "posts": posts}
+        return ctx

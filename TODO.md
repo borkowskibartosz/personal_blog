@@ -11,13 +11,15 @@ TODO
 + Edit comment
 + Delete comment
 + profile view
-- CRUD article
-    - update forms
++ CRUD article
+    + update forms
     + picture handling
-- CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
++ delete picture view
++ search
+
 - permissions
+- CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
 - reset password
-- search
 - pagination
 - tests
 - about page

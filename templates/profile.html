@@ -127,18 +127,19 @@
                 <th scope="col">#</th>
                 <th scope="col">Description</th>
                 <th scope="col">Thumbnail</th>
+                <th scope="col">Change</th>
                 </tr>
             </thead>
             <tbody>
             
-                <tr>
                 {% for picture in photos %}
+                <tr>
                 <th scope="row">{{picture.id}}</th>
                 <td> {{picture.description}} </td>
-      
                 <td> <img class="rounded border" style="height:50px" src="{{MEDIA_URL}}/media/{{picture.image}}"> </td>
-                {% endfor %}
+                <td> <a class="btn btn-danger btn-sm" href="{% url 'delete-photo' picture.id %}?next={{request.path}}" role="button">Delete</a> </td>
                </tr>
+                {% endfor %}
 
             </tbody>
             </table>

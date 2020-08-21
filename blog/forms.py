@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, Photo
+from .models import Comment, Photo, Post
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, UserChangeForm
@@ -139,3 +139,47 @@ class AddPhotoForm(forms.ModelForm):
           'image': forms.FileInput()
         }
         exclude = ['uploaded_by']
+
+class UpdatePostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+
+        fields = ['title', 'content', 'status', 'photos', 'categories']
+        
+        widgets = {
+          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post Title','id': 'title'}),
+          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control'}),
+          'status': forms.RadioSelect(attrs={'class': 'radio-inline'}),
+          'photos': forms.CheckboxSelectMultiple(attrs={'label': 'Attached photos','class': 'checkbox'}),
+          'categories': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
+        }
+
+class CreatePostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+
+        fields = ['title', 'status', 'photos', 'categories', 'content']
+        
+        widgets = {
+          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post title','id': 'title'}),
+          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control'}),
+          'status': forms.RadioSelect(attrs={'class': 'radio-inline'}),
+          'photos': forms.CheckboxSelectMultiple(attrs={'label': 'Attached photos','class': 'checkbox'}),
+          'categories': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
+
+        }
+
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+
+        fields = ['username','first_name', 'last_name']
+
+        widgets = {
+          'username': forms.TextInput(attrs={'input_type': 'text', 'help_text': "<ul class='errorlist text-muted'><li>150 characters or fewer.</li>Letters, digits and @/./+/-/_ only.</ul>", 'class': 'form-control','id': 'username'}),
+          'first_name': forms.TextInput(attrs={'input_type': 'text', 'class': 'form-control','id': 'first_name'}),
+          'last_name': forms.TextInput(attrs={'input_type': 'text', 'class': 'form-control','id': 'last_name'}),
+        }
+
+class PostSearchForm(forms.Form):
+    content = forms.CharField(max_length=50)
