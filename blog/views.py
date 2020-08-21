@@ -21,7 +21,7 @@ class MainView(TemplateView):
 
 class CreatePost(CreateView):
     model = Post
-    fields = ('title', 'author', 'content', 'status', 'photo', 'categories')
+    fields = ('title', 'author', 'content', 'status', 'photos', 'categories')
     success_url = reverse_lazy("index")
 
 class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

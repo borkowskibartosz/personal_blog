@@ -131,9 +131,6 @@ class UserSignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
 
 
-# class UserUpdateForm(forms.ModelForm):
-#     pass
-
 class AddPhotoForm(forms.ModelForm):
     class Meta:
         model = Photo

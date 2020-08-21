@@ -16,6 +16,7 @@ TODO
     + picture handling
 - CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
 - permissions
+- reset password
 - search
 - pagination
 - tests
