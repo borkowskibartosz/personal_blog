@@ -15,7 +15,6 @@
         <!-- Blog Post -->
         {% for post in posts %}
         <div class="card mb-4">
-        {% comment %} {% static '750x300.png' %} {% endcomment %}
           {% if post.photos.all.0 %}
           <img class="card-img-top" src="{{post.photos.all.0.image.url}}" alt="Card image cap">
           {% else %}

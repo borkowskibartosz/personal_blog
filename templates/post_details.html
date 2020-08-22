@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
   <!-- Page Content -->
@@ -32,7 +33,7 @@
         <hr>
 
         <!-- Date/Time -->
-        <p>Posted on {{post.created_on}}</p>
+        <p>Posted on {{post.created_on}} <small class='errorlist text-muted'>({{post.created_on |naturaltime|capfirst}})</small></p>
 
         <hr>
 
@@ -82,7 +83,7 @@
           {% endif %}
 
           <div class="media-body">
-            <h5 class="mt-0">{{comment.author}} </h5>
+            <h5 class="mt-0">{{comment.author}} <small class='errorlist text-muted'>({{comment.created_on |naturaltime|capfirst}})</small></h5>
             {{comment.content}}
             {% if user.username == comment.author.username %}
             <div class="d-flex flex-row-reverse">

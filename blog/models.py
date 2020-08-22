@@ -4,6 +4,9 @@ from django.db.models.signals import post_save
 # Create your models here.
 
 class Category(models.Model):
+    '''
+    All posts are assigned to one or multiple categories - like tags
+    '''
     name = models.CharField(max_length=150, blank=True)
     def __str__(self):
         return self.name
