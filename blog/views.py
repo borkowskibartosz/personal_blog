@@ -4,9 +4,10 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Count, Q
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.sites.shortcuts import get_current_site
+from django.db.models import Count, Q
 from django.utils.text import slugify
 from django.core.paginator import Paginator
 

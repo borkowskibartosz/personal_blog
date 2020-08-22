@@ -21,6 +21,8 @@ class Photo(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='profile/', blank=True)
+    email_confirmed = models.BooleanField(default=False)
+    reset_password = models.BooleanField(default=False)    
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

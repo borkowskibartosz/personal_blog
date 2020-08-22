@@ -64,8 +64,6 @@ Wrzucić na Heroku:
 Dodatkowo jak starczy czasu:
     - ocena komentarza (+/-)
 
-
-
 + all categories view
 + author view
 + individual category view
