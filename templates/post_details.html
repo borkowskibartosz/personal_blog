@@ -11,8 +11,8 @@
       <div class="col-lg-8">
            {% if user.username == post.author.username %}
             <div class="d-flex flex-row-reverse">
-            <div class="p-2"><a class="btn btn-danger btn-sm" href="{% url 'delete-post' slug=post.slug %}?next={{request.path}}" role="button">Delete Post</a></div>
-            <div class="p-2"><a class="btn btn-primary btn-sm" href="{% url 'update-post' slug=post.slug %}?next={{request.path}}" role="button">Edit Post</a></div>
+            <div class="p-2"><a class="btn btn-danger btn-sm" href="{% url 'delete-post' slug=post.slug %}?next={{request.path}}" role="button"><i class="far fa-trash-alt"></i></a></div>
+            <div class="p-2"><a class="btn btn-primary btn-sm" href="{% url 'update-post' slug=post.slug %}?next={{request.path}}" role="button"><i class="far fa-edit"></i></a></div>
             </div>
             {% endif %}
 
@@ -86,8 +86,8 @@
             {{comment.content}}
             {% if user.username == comment.author.username %}
             <div class="d-flex flex-row-reverse">
-            <div class="p-2"><a class="btn btn-danger btn-sm" href="{% url 'delete_comment' pk=comment.id %}?next={{request.path}}" role="button">Delete Comment</a></div>
-            <div class="p-2"><a class="btn btn-primary btn-sm" href="{% url 'update_comment' pk=comment.id %}?next={{request.path}}" role="button">Edit Comment</a></div>
+            <div class="p-2"><a class="btn btn-danger btn-sm" href="{% url 'delete_comment' pk=comment.id %}?next={{request.path}}" role="button"><i class="far fa-trash-alt"></i></a></div>
+            <div class="p-2"><a class="btn btn-primary btn-sm" href="{% url 'update_comment' pk=comment.id %}?next={{request.path}}" role="button"><i class="far fa-edit"></i></a></div>
             </div>
             {% endif %}
           </div>

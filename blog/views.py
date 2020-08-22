@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, FormView, CreateView
+from django.views.generic import TemplateView, FormView, CreateView, ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
@@ -8,6 +8,7 @@ from django.db.models import Count, Q
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.core.paginator import Paginator
 
 from .models import Post, Comment, Category, UserProfile, Photo
 from .forms import PostSearchForm, CommentForm, UserSignUpForm, AddPhotoForm, UpdatePostForm, CreatePostForm, UpdateUserForm
@@ -15,11 +16,12 @@ from django.views import View
 from django.urls import reverse_lazy
 
 
-class MainView(TemplateView):
+class MainView(ListView):
     template_name = 'main.html'
+    paginate_by = 5
+    queryset = Post.objects.filter(status=0)
+    context_object_name = 'posts'
 
-    def get_context_data(self):
-        return {'posts': Post.objects.filter(status=0)}
 
 class CreatePost(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')

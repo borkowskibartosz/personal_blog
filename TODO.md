@@ -15,10 +15,10 @@
 + delete picture view
 + search
 + about page
++ pagination
 
 - CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
 - reset password
-- pagination
 - contact page  https://learndjango.com/tutorials/django-email-contact-form
 - permissions
 - tests
