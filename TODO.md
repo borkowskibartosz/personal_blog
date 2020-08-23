@@ -83,12 +83,13 @@ Dodatkowo jak starczy czasu:
 + about page
 + pagination
 + data komentarza
++ social login Github and Google
++ reset password
 
-- CRUD user.https://simpleisbetterthancomplex.com/tutorial/2016/10/24/how-to-add-social-login-to-django.html
-- social login Github and Google
-- reset password
-- contact page  https://learndjango.com/tutorials/django-email-contact-form
-- permissions
+- delete user
+- add avatar from social
+- contact page https://learndjango.com/tutorials/django-email-contact-form
 - tests
+- heroku
 
 - post rating (?)

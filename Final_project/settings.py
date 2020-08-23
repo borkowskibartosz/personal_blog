@@ -73,6 +73,21 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
+# SOCIAL_AUTH_PIPELINE = (
+
+#     'social.pipeline.social_auth.social_details',
+#     'social.pipeline.social_auth.social_uid',
+#     'social.pipeline.social_auth.auth_allowed',
+#     'social.pipeline.social_auth.social_user',
+#     'social.pipeline.user.get_username',
+#     'social.pipeline.user.create_user',
+#     'social.pipeline.social_auth.associate_user',
+#     'social.pipeline.social_auth.load_extra_data',
+#     'social.pipeline.user.user_details',
+#     'apps.users.pipeline.get_avatar', # This is the path of your pipeline.py
+#     #and get_avatar is the function.
+# )
+
 ROOT_URLCONF = 'Final_project.urls'
 
 TEMPLATES = [
@@ -163,3 +178,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
