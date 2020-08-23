@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from blog import views
 from django.conf import settings
@@ -24,6 +25,9 @@ from django.views.decorators.http import require_POST
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    # path('logout/', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+
     path('', MainView.as_view(), name='main'),
     path('post/<slug:post_slug>/', PostView.as_view(), name='post_details'),
     path('create_post/', CreatePost.as_view(), name='create-post'),
@@ -37,14 +41,19 @@ urlpatterns = [
     path('comment/edit/<int:pk>/', CommentUpdate.as_view(), name='update_comment'),
     path('comments/delete/<int:pk>/', DeleteComment.as_view(), name='delete_comment'),
     path('signup/', SignupView.as_view(), name='signup'),
-    path('accounts/profile/', ProfileView.as_view(), name='profile'),
-    path('accounts/', include('django.contrib.auth.urls')),
     path('update_avatar/<int:pk>/', UpdateAvatar.as_view(), name='update-avatar'),
     path('update_profile/<int:pk>/', UpdateProfile.as_view(), name='update-profile'),
     path('add_photo/', AddPhotoView.as_view(), name='add-photo'),
     path('delete_photo/<int:pk>', DeletePhoto.as_view(), name='delete-photo'),
     path('about', AboutView.as_view(), name='about'),
 
-    # path('accounts/login/', MyLoginView.as_view(), name='login'),
+
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    path('accounts/logout/', auth_views.LogoutView.as_view(next_page='main'), name='logout'),
+    path('', include('social_django.urls', namespace='social')),
+    path('accounts/profile/', ProfileView.as_view(), name='profile'),
+    path('accounts/', include('django.contrib.auth.urls')),
+
+    # path('accounts/login/', MyLoginView.as_view(), name='site_login'),
     # path('comment_form/', require_POST(CommentFormView.as_view()), name='comment_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

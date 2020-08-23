@@ -84,7 +84,8 @@ Dodatkowo jak starczy czasu:
 + pagination
 + data komentarza
 
-- CRUD user https://medium.com/swlh/email-verified-user-registration-and-password-reset-in-django-ffb9b30939a8
+- CRUD user.https://simpleisbetterthancomplex.com/tutorial/2016/10/24/how-to-add-social-login-to-django.html
+- social login Github and Google
 - reset password
 - contact page  https://learndjango.com/tutorials/django-email-contact-form
 - permissions

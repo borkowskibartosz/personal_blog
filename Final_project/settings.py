@@ -21,11 +21,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
+#Sendgrid
 with open('/home/bartosz/Documents/sendgrid_secret_key.txt') as f:
     SECRET_KEY = f.read().strip()
 
+#Recaptcha
 with open('/home/bartosz/Documents/recaptcha_secret_key.txt') as f:
     GOOGLE_RECAPTCHA_SECRET_KEY = f.read().strip()
+
+#Google login
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '804199956062-mknu04ck39ucsq38l26ishdv9ldis6jv.apps.googleusercontent.com'
+with open('/home/bartosz/Documents/google_secret_key.txt') as f:
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = f.read().strip()
+
+# Github login
+SOCIAL_AUTH_GITHUB_KEY = 'e6c527609d67ec2321c5'
+with open('/home/bartosz/Documents/github_secret_key.txt') as f:
+    SOCIAL_AUTH_GITHUB_SECRET = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'django.contrib.humanize',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'Final_project.urls'
@@ -110,6 +125,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 
 # Internationalization
@@ -134,3 +155,9 @@ MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_PROFILE_MODULE = 'blog.UserProfile'
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
