@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
 
 #Sendgrid
 with open('/home/bartosz/Documents/sendgrid_secret_key.txt') as f:
@@ -39,6 +40,7 @@ with open('/home/bartosz/Documents/google_secret_key.txt') as f:
 SOCIAL_AUTH_GITHUB_KEY = 'e6c527609d67ec2321c5'
 with open('/home/bartosz/Documents/github_secret_key.txt') as f:
     SOCIAL_AUTH_GITHUB_SECRET = f.read().strip()
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -155,9 +157,12 @@ MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_PROFILE_MODULE = 'blog.UserProfile'
+<<<<<<< HEAD
 
 LOGIN_URL = '/auth/login/google-oauth2/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+=======
+>>>>>>> 909441619d3ed46650978892d4c83453c4a207db
