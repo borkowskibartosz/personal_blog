@@ -90,16 +90,15 @@ DONE
 + delete user if staf member
 + all users view to delete
 + contact page
++ add avatar from social
 
 TODO:
-
 - tests
+- configure send-grid
 - admin pass
 - admin path
 - heroku
-- add avatar from social
 
 TODO: BUGS:
     - 
-
 - post rating (?)
