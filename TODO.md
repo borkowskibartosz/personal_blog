@@ -93,9 +93,11 @@ DONE
 
 TODO:
 
-- add avatar from social
 - tests
+- admin pass
+- admin path
 - heroku
+- add avatar from social
 
 TODO: BUGS:
     - 

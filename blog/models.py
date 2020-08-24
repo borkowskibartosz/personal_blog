@@ -38,15 +38,15 @@ class UserProfile(models.Model):
     avatar = models.ImageField(upload_to="profile/", blank=True)
     email_confirmed = models.BooleanField(default=False)
     reset_password = models.BooleanField(default=False)
+    def __str__(self):  
+        return f'{self.user}s\'s profile'
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 post_save.connect(create_user_profile, sender=User)
 
-
 STATUS = ((0, "Published"), (1, "Draft"))
-
 
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
