@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="card my-4">
+        <h5 class="card-header">Signup</h5>
+        <div class="card-body">
+          <p>
+            Signup complete. You may go ahead and <a href="{% url 'login' %}">Login</a> now.
+          </p>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+

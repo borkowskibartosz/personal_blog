@@ -183,3 +183,35 @@ class UpdateUserForm(forms.ModelForm):
 
 class PostSearchForm(forms.Form):
     content = forms.CharField(max_length=50)
+
+class ContactForm(forms.Form):
+    from_email = forms.EmailField(
+        label='Email from:',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Email address',
+                'type': 'email',
+                'id': 'from_email',
+            }))
+
+    subject = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Email subject',
+            'type': 'text',
+            'id': 'subject',            
+        }))       
+
+    message = forms.CharField(
+        required=True,
+        widget=forms.Textarea(
+            attrs={
+            'class': 'form-control',
+            'placeholder': 'Message',
+            'type': 'text',
+            'id': 'message',                   
+        }))

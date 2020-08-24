@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, FormView, CreateView, ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Count, Q
 from django.utils.text import slugify
+from django.core.mail import send_mail, BadHeaderError
 from django.core.paginator import Paginator
 
 from .models import Post, Comment, Category, UserProfile, Photo
@@ -23,6 +24,7 @@ from .forms import (
     UpdatePostForm,
     CreatePostForm,
     UpdateUserForm,
+    ContactForm,
 )
 from django.views import View
 from django.urls import reverse_lazy
@@ -195,8 +197,12 @@ class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class SignupView(CreateView):
     form_class = UserSignUpForm
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("signup-complete")
     template_name = "signup.html"
+
+
+class SignupViewComplete(TemplateView):
+    template_name = "signup_complete.html"
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -205,10 +211,11 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self):
         u = self.request.user  # .get_profile()
+        users = User.objects.all()
         posts = Post.objects.filter(author__id=u.pk)
         comments = Comment.objects.filter(author__pk=u.pk)
         photos = Photo.objects.filter(uploaded_by__id=u.pk)
-        return {"posts": posts, "comments": comments, "photos": photos}
+        return {"posts": posts, "comments": comments, "photos": photos, "users": users}
 
 
 class UpdateAvatar(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -294,3 +301,41 @@ class PostSearch(TemplateView):
 class AboutView(TemplateView):
     template_name = "about.html"
 
+
+class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """ Delete user if owner or staff member """
+
+    login_url = reverse_lazy("main")
+    model = User
+
+    def get_success_url(self):
+        return self.request.GET.get("next", reverse_lazy("main"))
+
+    def test_func(self):
+        obj = self.get_object()
+        if obj == self.request.user or (self.request.user.is_staff):
+            return True
+        else:
+            return False
+
+
+class ContactView(FormView):
+    form_class = ContactForm 
+    template_name = "contact.html"
+    success_url = reverse_lazy("contact-success")
+
+    def post(self, request, *args, **kwargs):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['voo@o2.pl'])
+            except BadHeaderError:
+                return 'Invalid header found.'
+            return redirect('contact-success')
+        return render(request, "contact.html", {'form': form})            
+
+class ContactCompleteView(TemplateView):
+    template_name = 'contact_success.html'

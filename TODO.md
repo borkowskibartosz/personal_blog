@@ -64,6 +64,8 @@ Wrzucić na Heroku:
 Dodatkowo jak starczy czasu:
     - ocena komentarza (+/-)
 
+
+DONE
 + all categories view
 + author view
 + individual category view
@@ -85,11 +87,17 @@ Dodatkowo jak starczy czasu:
 + data komentarza
 + social login Github and Google
 + reset password
++ delete user if staf member
++ all users view to delete
++ contact page
 
-- delete user
+TODO:
+
 - add avatar from social
-- contact page https://learndjango.com/tutorials/django-email-contact-form
 - tests
 - heroku
+
+TODO: BUGS:
+    - 
 
 - post rating (?)

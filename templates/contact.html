@@ -9,14 +9,14 @@
       <!-- Blog Entries Column -->
       <div class="col-md-8">
        <div class="card my-4">
-          <h5 class="card-header">Update Profile</h5>
+          <h5 class="card-header">Contact</h5>
           <div class="card-body">
             <form method='POST'>
               {% csrf_token %}
               <div class="form-group">
                 {{form.as_p}}
               </div>
-              <button type="submit" class="btn btn-primary" >Update</button>
+              <button type="submit" class="btn btn-primary float-right" >Send</button>
             </form>
           </div>
         </div>

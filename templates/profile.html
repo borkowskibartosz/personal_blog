@@ -60,7 +60,7 @@
             <div class="card my-4">
                 <h5 class="card-header"><strong>All posts</strong></h5>
                 <h5 class="my-4"><a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button"
-                        atl="Add a post">Add new post</a> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}"
+                        alt="Add a post">Add new post</a> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}"
                         role="button" atl="Add a photo">Add new photo</a></h5>
 
                 <div class="card-body">
@@ -167,5 +167,43 @@
                     </div>
                 </div>
             </div>
+            
+            {% if user.is_staff %}
+
+            <div class="card my-4">
+                <h5 class="card-header"><strong>Manage Users <span
+                        class="badge badge-warning">Staff member</span></strong></h5>
+                <div class="card-body">
+                    <div class="d-flex justify-content-around">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Staff member</th>
+                                    <th scope="col">Change</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for usr in users %}
+                                <tr>
+                                    <th scope="row">{{usr.pk}}</th>
+                                    <td> {{usr.username}} </td>
+                                    <td> {{usr.is_staff}}</td>
+                                    <td>  <a class="btn btn-danger btn-sm" href="{% url "delete-user" pk=usr.pk %}" role="button">
+                                    <i class="far fa-trash-alt"></i></a> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
+
         </div>
         {% endblock content %}

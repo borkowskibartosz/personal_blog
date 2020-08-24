@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="col-md-8">
+                <h3 class="my-4"><small></small></h3>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <h3 class="my-4">Are you sure ?</h3><input type="submit" class="btn btn-danger" value="Delete User">
+                </form>
+            </div>
+        </div>
+
+        {% endblock %}

@@ -3,25 +3,24 @@
 
 {% block content %}
 
-  <div class="container">
-    <div class="row">
+<div class="container">
+  <div class="row">
 
-      <!-- Blog Entries Column -->
-      <div class="col-md-8">
-       <div class="card my-4">
-          <h5 class="card-header">Create Post</h5>
-          <div class="card-body">
-            <form method='POST'>
-              {% csrf_token %}
-              {{form.as_p}}
-              </div>
-              <button type="submit" class="btn btn-success" >Create</button>
-            </form>
-          </div>
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+      <div class="card my-4">
+        <h5 class="card-header">Create Post</h5>
+        <div class="card-body">
+          <h5 class="my-4"><a class="btn btn-success btn-sm" href="{% url 'add-photo'%}?next={{request.path}}" role="button"
+              alt="Add a photo">Add new photo</a></h5>
+          <form method='POST'>
+            {% csrf_token %}
+            {{form.as_p}}
         </div>
+        <button type="submit" class="btn btn-success">Create</button>
         </form>
+      </div>
+    </div>
+    </form>
 
-{% endblock %}
-
-
- 
+    {% endblock %}
