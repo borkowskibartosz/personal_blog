@@ -58,13 +58,13 @@ class BasicViewsTest(TestCase):
 
 class LoggedInTest(TestCase):
     def setUp(self):
-        test_user = User.objects.get_or_create(username='testuser')[0]
-        self.client.force_login(test_user)
+        Category.objects.create(name='test_category')
+        User.objects.get_or_create(username='testuser')[0]
+        self.client.force_login(User.objects.get(id=1))
 
     def test_profile_view(self):
         response = self.client.get('/accounts/profile/')
         self.assertEqual(response.status_code, 200)    
-
 
     def test_comments_view(self):
         response = self.client.get('/comments/')
@@ -76,15 +76,7 @@ class LoggedInTest(TestCase):
         response = self.client.post('/create_category/', {'name':'test_category'})
         self.assertEqual(response.status_code, 403)  
     def test_create_post(self):
-        test_category = Category.objects.create(name='test_category')
+        test_category = Category.objects.get(id=1)
         response = self.client.post('/create_post/', {'title':'test_title', 'status': 1, 'content': 'test content'})
         self.assertEqual(response.status_code, 200)
-    # def test_create_comment(self):
-    #     test_user = User.objects.get_or_create(username='testuser')[0]
-    #     self.client.force_login(test_user) 
-    #     test_category = Category.objects.create(name='test_category')
-    #     test_post = Post.objects.create(title='test_title', status=1, content= 'test content', author=test_user, slug='test-title')
-    #     response = self.client.post('/post_details/test-title/', {'content':'test message'})
-    #     self.assertEqual(response.status_code, 200)
 
-    

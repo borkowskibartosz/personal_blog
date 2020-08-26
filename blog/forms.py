@@ -2,44 +2,59 @@ from django import forms
 from .models import Comment, Photo, Post, Category
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, UserChangeForm
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    PasswordResetForm,
+    SetPasswordForm,
+    UserChangeForm,
+)
 from django.core.exceptions import ValidationError
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         widgets = {
-          'content': forms.Textarea(attrs={'rows':2, 'cols':60, 'required': True}),
+            "content": forms.Textarea(attrs={"rows": 2, "cols": 60, "required": True}),
         }
-        exclude = ['created_on', 'rating', 'source_post', 'author']
+        exclude = ["created_on", "rating", "source_post", "author"]
+
 
 User = get_user_model()
 
+
 class UserPasswordResetForm(SetPasswordForm):
     """Change password form."""
-    new_password1 = forms.CharField(label='Password',
+
+    new_password1 = forms.CharField(
+        label="Password",
         help_text="<ul class='errorlist text-muted'><li>Your password can 't be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can 't be a commonly used password.</li> <li>Your password can 't be entirely numeric.<li></ul>",
         max_length=100,
         required=True,
         widget=forms.PasswordInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'password',
-            'type': 'password',
-            'id': 'user_password',
-        }))
+            attrs={
+                "class": "form-control",
+                "placeholder": "password",
+                "type": "password",
+                "id": "user_password",
+            }
+        ),
+    )
 
-    new_password2 = forms.CharField(label='Confirm password',
+    new_password2 = forms.CharField(
+        label="Confirm password",
         help_text=False,
         max_length=100,
         required=True,
         widget=forms.PasswordInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'confirm password',
-            'type': 'password',
-            'id': 'user_password',
-        }))
+            attrs={
+                "class": "form-control",
+                "placeholder": "confirm password",
+                "type": "password",
+                "id": "user_password",
+            }
+        ),
+    )
 
 
 # class UserForgotPasswordForm(PasswordResetForm):
@@ -58,168 +73,275 @@ class UserPasswordResetForm(SetPasswordForm):
 
 class UserSignUpForm(UserCreationForm):
     """User registration form."""
-    username = forms.CharField(label='Username',
+
+    username = forms.CharField(
+        label="Username",
         max_length=100,
         required=True,
         widget=forms.TextInput(
-        attrs={'class': 'form-control',
-               'placeholder': 'username',
-               'type': 'text',
-               'id': 'user_name'
-               }
-        ))
+            attrs={
+                "class": "form-control",
+                "placeholder": "username",
+                "type": "text",
+                "id": "user_name",
+            }
+        ),
+    )
 
-    first_name = forms.CharField(label='First name',
+    first_name = forms.CharField(
+        label="First name",
         max_length=100,
         required=True,
         widget=forms.TextInput(
-        attrs={'class': 'form-control',
-               'placeholder': 'first name',
-               'type': 'text',
-               'id': 'first_name'
-               }
-        ))
+            attrs={
+                "class": "form-control",
+                "placeholder": "first name",
+                "type": "text",
+                "id": "first_name",
+            }
+        ),
+    )
 
-    last_name = forms.CharField(label='Last name',
+    last_name = forms.CharField(
+        label="Last name",
         max_length=100,
         required=True,
         widget=forms.TextInput(
-        attrs={'class': 'form-control',
-               'placeholder': 'last name',
-               'type': 'text',
-               'id': 'last_name'
-               }
-        ))
+            attrs={
+                "class": "form-control",
+                "placeholder": "last name",
+                "type": "text",
+                "id": "last_name",
+            }
+        ),
+    )
 
-    email = forms.EmailField(label='Email address',
+    email = forms.EmailField(
+        label="Email address",
         max_length=254,
         required=True,
         widget=forms.TextInput(
-        attrs={'class': 'form-control',
-               'placeholder': 'email address',
-               'type': 'text',
-               'id': 'email_address'
-               }
-        ))
+            attrs={
+                "class": "form-control",
+                "placeholder": "email address",
+                "type": "text",
+                "id": "email_address",
+            }
+        ),
+    )
 
-    password1 = forms.CharField(label='Password',
+    password1 = forms.CharField(
+        label="Password",
         help_text="<ul class='errorlist text-muted'><li>Your password can 't be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can 't be a commonly used password.</li> <li>Your password can 't be entirely numeric.</ul>",
         max_length=100,
         required=True,
         widget=forms.PasswordInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'password',
-            'type': 'password',
-            'id': 'user_password',
-        }))
+            attrs={
+                "class": "form-control",
+                "placeholder": "password",
+                "type": "password",
+                "id": "user_password",
+            }
+        ),
+    )
 
-    password2 = forms.CharField(label='Confirm password',
+    password2 = forms.CharField(
+        label="Confirm password",
         help_text=False,
         max_length=100,
         required=True,
         widget=forms.PasswordInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'confirm password',
-            'type': 'password',
-            'id': 'user_password',
-        }))
+            attrs={
+                "class": "form-control",
+                "placeholder": "confirm password",
+                "type": "password",
+                "id": "user_password",
+            }
+        ),
+    )
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "password1",
+            "password2",
+        )
 
 
 class AddPhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         widgets = {
-          'description': forms.TextInput(attrs={'input_type': 'text', 'required': True}),
-          'image': forms.FileInput()
+            "description": forms.TextInput(
+                attrs={"input_type": "text", "required": True}
+            ),
+            "image": forms.FileInput(),
         }
-        exclude = ['uploaded_by']
+        exclude = ["uploaded_by"]
+
 
 class UpdatePostForm(forms.ModelForm):
     class Meta:
         model = Post
 
-        fields = ['title', 'content', 'status', 'photos', 'categories']
-        
+        fields = ["title", "content", "status", "photos", "categories"]
+
         widgets = {
-          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post Title','id': 'title', 'required': True}),
-          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control', 'required': True}),
-          'status': forms.RadioSelect(attrs={'class': 'radio-inline'}),
-          'photos': forms.CheckboxSelectMultiple(attrs={'label': 'Attached photos','class': 'checkbox'}),
-          'categories': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
+            "title": forms.TextInput(
+                attrs={
+                    "label": "title",
+                    "input_type": "text",
+                    "class": "form-control",
+                    "placeholder": "Post Title",
+                    "id": "title",
+                    "required": True,
+                }
+            ),
+            "content": forms.Textarea(
+                attrs={
+                    "rows": 50,
+                    "cols": 60,
+                    "class": "form-control",
+                    "required": True,
+                }
+            ),
+            "status": forms.RadioSelect(attrs={"class": "radio-inline"}),
+            "photos": forms.CheckboxSelectMultiple(
+                attrs={
+                    "label": "Attached photos",
+                    "class": "checkbox",
+                    "required": False,
+                }
+            ),
+            "categories": forms.CheckboxSelectMultiple(attrs={"class": "checkbox"}),
         }
+
 
 class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
 
-        fields = ['title', 'status', 'photos', 'categories', 'content']
-        
+        fields = ["title", "status", "photos", "categories", "content"]
+
         widgets = {
-          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post title','id': 'title', 'required': True}),
-          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control', 'required': True}),
-          'status': forms.RadioSelect(attrs={'class': 'radio-inline', 'required': True}),
-          'photos': forms.CheckboxSelectMultiple(attrs={'label': 'Attached photos','class': 'checkbox'}),
-          'categories': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
+            "title": forms.TextInput(
+                attrs={
+                    "label": "title",
+                    "input_type": "text",
+                    "class": "form-control",
+                    "placeholder": "Post title",
+                    "id": "title",
+                    "required": True,
+                }
+            ),
+            "content": forms.Textarea(
+                attrs={
+                    "rows": 50,
+                    "cols": 60,
+                    "class": "form-control",
+                    "required": True,
+                }
+            ),
+            "status": forms.RadioSelect(
+                attrs={"class": "radio-inline", "required": True}
+            ),
+            "photos": forms.CheckboxSelectMultiple(
+                attrs={"label": "Attached photos", "class": "checkbox", "required": False}
+            ),
+            "categories": forms.CheckboxSelectMultiple(attrs={"class": "checkbox"}),
         }
 
 
 class CreateCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['name']
+        fields = ["name"]
         widgets = {
-          'name': forms.TextInput(attrs={'label': 'name', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Category name','id': 'name', 'required': True}),
+            "name": forms.TextInput(
+                attrs={
+                    "label": "name",
+                    "input_type": "text",
+                    "class": "form-control",
+                    "placeholder": "Category name",
+                    "id": "name",
+                    "required": True,
+                }
+            ),
         }
+
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
 
-        fields = ['username','first_name', 'last_name']
+        fields = ["username", "first_name", "last_name"]
 
         widgets = {
-          'username': forms.TextInput(attrs={'input_type': 'text', 'help_text': "<ul class='errorlist text-muted'><li>150 characters or fewer.</li>Letters, digits and @/./+/-/_ only.</ul>", 'class': 'form-control','id': 'username', 'required': True}),
-          'first_name': forms.TextInput(attrs={'input_type': 'text', 'class': 'form-control','id': 'first_name'}),
-          'last_name': forms.TextInput(attrs={'input_type': 'text', 'class': 'form-control','id': 'last_name'}),
+            "username": forms.TextInput(
+                attrs={
+                    "input_type": "text",
+                    "help_text": "<ul class='errorlist text-muted'><li>150 characters or fewer.</li>Letters, digits and @/./+/-/_ only.</ul>",
+                    "class": "form-control",
+                    "id": "username",
+                    "required": True,
+                }
+            ),
+            "first_name": forms.TextInput(
+                attrs={
+                    "input_type": "text",
+                    "class": "form-control",
+                    "id": "first_name",
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={"input_type": "text", "class": "form-control", "id": "last_name"}
+            ),
         }
+
 
 class PostSearchForm(forms.Form):
     content = forms.CharField(max_length=50)
 
+
 class ContactForm(forms.Form):
     from_email = forms.EmailField(
-        label='Email from:',
+        label="Email from:",
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
-                'placeholder': 'Email address',
-                'type': 'email',
-                'id': 'from_email',
-            }))
+                "class": "form-control",
+                "placeholder": "Email address",
+                "type": "email",
+                "id": "from_email",
+            }
+        ),
+    )
 
     subject = forms.CharField(
         required=True,
         widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Email subject',
-            'type': 'text',
-            'id': 'subject',            
-        }))       
+            attrs={
+                "class": "form-control",
+                "placeholder": "Email subject",
+                "type": "text",
+                "id": "subject",
+            }
+        ),
+    )
 
     message = forms.CharField(
         required=True,
         widget=forms.Textarea(
             attrs={
-            'class': 'form-control',
-            'placeholder': 'Message',
-            'type': 'text',
-            'id': 'message',                   
-        }))
+                "class": "form-control",
+                "placeholder": "Message",
+                "type": "text",
+                "id": "message",
+            }
+        ),
+    )
+

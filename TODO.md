@@ -101,6 +101,8 @@ TODO:
 - admin pass
 - admin path
 - heroku
+https://boiling-headland-55029.herokuapp.com/ | https://git.heroku.com/boiling-headland-55029.git
+
 
 TODO: BUGS:
     - 

@@ -59,7 +59,7 @@ class Post(models.Model):
     content = models.TextField(verbose_name="Post content")
     status = models.IntegerField(choices=STATUS, default=1)
     photos = models.ManyToManyField(Photo, related_name="posts", blank=True)
-    categories = models.ManyToManyField(Category, related_name="category_posts")
+    categories = models.ManyToManyField(Category, related_name="category_posts", blank=True)
 
     class Meta:
         ordering = ["-created_on"]
