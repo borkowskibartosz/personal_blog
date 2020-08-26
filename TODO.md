@@ -91,6 +91,9 @@ DONE
 + all users view to delete
 + contact page
 + add avatar from social
++ categories in profile
++ add category
++ delete category
 
 TODO:
 - tests

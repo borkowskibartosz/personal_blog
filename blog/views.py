@@ -25,6 +25,7 @@ from .forms import (
     CreatePostForm,
     UpdateUserForm,
     ContactForm,
+    CreateCategoryForm,
 )
 from django.views import View
 from django.urls import reverse_lazy
@@ -51,14 +52,9 @@ class CreatePost(LoginRequiredMixin, CreateView):
             post.slug = slugify(post.title, allow_unicode=False)
             post.author = request.user
             post.save()
-
-            return self.form_valid(form)
+            return redirect('main')
         else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+            return render(request, 'blog/post_form.html', {'form': form})            
 
 
 class UpdatePost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -152,7 +148,8 @@ class CategoriesView(TemplateView):
         return ctx
 
 
-class CommentsView(TemplateView):
+class CommentsView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy("login")
     template_name = "comments.html"
 
     def get_context_data(self, **kwargs):
@@ -184,7 +181,6 @@ class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     login_url = reverse_lazy("login")
-
     model = Comment
 
     def get_success_url(self):
@@ -194,16 +190,18 @@ class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         obj = self.get_object()
         return obj.author == self.request.user
 
-
 class SignupView(CreateView):
     form_class = UserSignUpForm
     success_url = reverse_lazy("signup-complete")
     template_name = "signup.html"
 
-
 class SignupViewComplete(TemplateView):
     template_name = "signup_complete.html"
+    success_url = reverse_lazy("main")
 
+class CreatePostComplete(TemplateView):
+    template_name = "post_complete.html"
+    success_url = reverse_lazy("main")
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy("login")
@@ -258,14 +256,9 @@ class AddPhotoView(LoginRequiredMixin, CreateView):
             photo = form.save(commit=False)
             photo.uploaded_by = request.user
             photo.save()
-
-            return self.form_valid(form)
+            return redirect('main')
         else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+            return render(request, 'blog/add_photo.html', {'form': form})   
 
 
 class DeletePhoto(LoginRequiredMixin, DeleteView):
@@ -303,7 +296,7 @@ class AboutView(TemplateView):
 
 
 class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    """ Delete user if owner or staff member """
+    """ Delete user if owner or staff member logged in"""
 
     login_url = reverse_lazy("main")
     model = User
@@ -313,7 +306,7 @@ class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         obj = self.get_object()
-        if obj == self.request.user or (self.request.user.is_staff):
+        if obj == self.request.user or self.request.user.is_staff:
             return True
         else:
             return False
@@ -339,3 +332,42 @@ class ContactView(FormView):
 
 class ContactCompleteView(TemplateView):
     template_name = 'contact_success.html'
+
+class DeleteCategoryView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    login_url = reverse_lazy("login")
+
+    model = Category
+
+    def get_success_url(self):
+        return self.request.GET.get("next", reverse_lazy("main"))
+
+    def test_func(self):
+        if self.request.user.is_staff:
+            return True
+        else:
+            return False
+
+class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Category
+    fields = ["name"]
+    template_name_suffix = "_update_form"
+    success_url = "main"
+
+    def test_func(self):
+        if self.request.user.is_staff:
+            return True
+        else:
+            return False
+
+class CreateCategoryView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    login_url = reverse_lazy("login")
+    form_class = CreateCategoryForm
+
+    model = Category
+    success_url = reverse_lazy("main")
+
+    def test_func(self):
+        if self.request.user.is_staff:
+            return True
+        else:
+            return False

@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
 
 from django.contrib import admin
@@ -26,8 +26,11 @@ from blog.views import (
     PostSearch,
     ContactView,
     ContactCompleteView,
+    CategoryUpdateView,
+    CreateCategoryView,
     DeletePhoto,
     DeleteUser,
+    DeleteCategoryView,
     AddPhotoView,
     CreatePost,
     UpdatePost,
@@ -45,31 +48,36 @@ from blog.views import (
     CommentUpdate,
     CommentsView,
     DeleteComment,
+    CreatePostComplete,
 )
 from django.views.decorators.http import require_POST
 
 urlpatterns = [
-    url(r"^admin/", admin.site.urls),
+    re_path(r"^admin/", admin.site.urls),
     # path('logout/', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path("", MainView.as_view(), name="main"),
     path("post/<slug:post_slug>/", PostView.as_view(), name="post_details"),
     path("create_post/", CreatePost.as_view(), name="create-post"),
     path("post/edit/<slug:slug>/", UpdatePost.as_view(), name="update-post"),
     path("post/delete/<slug:slug>/", DeletePost.as_view(), name="delete-post"),
+    path("post/done/", CreatePostComplete.as_view(), name='create-post-complete'),
     path("post/search", PostSearch.as_view(), name="post-search"),
     path("author/<str:post_author>/", AuthorView.as_view(), name="author_posts"),
     path("categories/", CategoriesView.as_view(), name="categories"),
     path("category/<int:category_id>", CategoryView.as_view(), name="category_details"),
+    path("category/delete/<int:pk>/", DeleteCategoryView.as_view(), name="delete-category"),
+    path("category/edit/<int:pk>/", CategoryUpdateView.as_view(), name="update-category"),
+    path("create_category/", CreateCategoryView.as_view(), name="create-category"),
     path("comments/", CommentsView.as_view(), name="comments"),
     path("comment/edit/<int:pk>/", CommentUpdate.as_view(), name="update_comment"),
     path("comments/delete/<int:pk>/", DeleteComment.as_view(), name="delete_comment"),
     path("signup/", SignupView.as_view(), name="signup"),
-    path("signup/done/", SignupViewComplete.as_view(), 'signup-complete'),
+    path("signup/done/", SignupViewComplete.as_view(), name='signup-complete'),
     path("update_avatar/<int:pk>/", UpdateAvatar.as_view(), name="update-avatar"),
     path("update_profile/<int:pk>/", UpdateProfile.as_view(), name="update-profile"),
     path("add_photo/", AddPhotoView.as_view(), name="add-photo"),
     path("delete_photo/<int:pk>", DeletePhoto.as_view(), name="delete-photo"),
-    path("about", AboutView.as_view(), name="about"),
+    path("about/", AboutView.as_view(), name="about"),
     path('contact/', ContactView.as_view(), name='contact'),
     path('contact/done/', ContactCompleteView.as_view(), name='contact-success'),
 
@@ -84,22 +92,22 @@ urlpatterns = [
     path("accounts/profile/", ProfileView.as_view(), name="profile"),
     path("accounts/", include("django.contrib.auth.urls")),
 
-    url(
+    re_path(
         r"^password_reset/$",
         auth_views.PasswordResetView.as_view(),
         name="password_reset",
     ),
-    url(
+    re_path(
         r"^password_reset/done/$",
         auth_views.PasswordResetDoneView.as_view(),
         name="password_reset_done",
     ),
-    url(
+    re_path(
         r"^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
         auth_views.PasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
-    url(
+    re_path(
         r"^reset/done/$",
         auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",

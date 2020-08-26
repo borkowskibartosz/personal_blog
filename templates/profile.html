@@ -59,9 +59,8 @@
 
             <div class="card my-4">
                 <h5 class="card-header"><strong>All posts</strong></h5>
-                <h5 class="my-4"><a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button"
-                        alt="Add a post">Add new post</a> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}"
-                        role="button" atl="Add a photo">Add new photo</a></h5>
+                <div class="my-4"><a class="btn btn-success btn-sm" href="{% url 'create-post'%}" role="button"
+                        alt="Add a post">Add new post</a> </div>
 
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
@@ -136,6 +135,8 @@
 
             <div class="card my-4">
                 <h5 class="card-header"><strong>All pictures</strong></h5>
+                <h5 class="my-4"> <a class="btn btn-success btn-sm" href="{% url 'add-photo'%}" role="button"
+                        atl="Add a photo">Add new photo</a></h5>
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
 
@@ -167,12 +168,13 @@
                     </div>
                 </div>
             </div>
-            
-            {% if user.is_staff %}
 
+            {% if user.is_staff %}
             <div class="card my-4">
-                <h5 class="card-header"><strong>Manage Users <span
-                        class="badge badge-warning">Staff member</span></strong></h5>
+                <h5 class="card-header"><strong>Manage Categories <span class="badge badge-warning">Staff
+                            member</span></strong></h5>
+                <div class="my-4"> <a class="btn btn-success btn-sm" href="{% url 'create-category'%}" role="button"
+                    atl="Add a photo">Add a category</a></div>
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
 
@@ -180,6 +182,42 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">No. of posts</th>
+                                    <th scope="col">Change</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for cat in top_categories %}
+                                <tr>
+                                    <th scope="row">{{cat.id}}</th>
+                                    <td> {{cat.name}} </td>
+                                    <td> {{cat.post_count}} </td>
+                                    <td> <a class="btn btn-info btn-sm" href="{% url 'update-category' pk=cat.id %}"
+                                        role="button"><i class="far fa-edit"></i></a> <a class="btn btn-danger btn-sm" href="{% url 'delete-category' pk=cat.id %}"
+                                            role="button">
+                                            <i class="far fa-trash-alt"></i></a> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if user.is_staff %}
+            <div class="card my-4">
+                <h5 class="card-header"><strong>Manage Users <span class="badge badge-warning">Staff
+                            member</span></strong></h5>
+                <div class="card-body">
+                    <div class="d-flex justify-content-around">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
                                     <th scope="col">User</th>
                                     <th scope="col">Staff member</th>
                                     <th scope="col">Change</th>
@@ -192,8 +230,9 @@
                                     <th scope="row">{{usr.pk}}</th>
                                     <td> {{usr.username}} </td>
                                     <td> {{usr.is_staff}}</td>
-                                    <td>  <a class="btn btn-danger btn-sm" href="{% url "delete-user" pk=usr.pk %}" role="button">
-                                    <i class="far fa-trash-alt"></i></a> </td>
+                                    <td> <a class="btn btn-danger btn-sm" href="{% url "delete-user" pk=usr.pk %}"
+                                            role="button">
+                                            <i class="far fa-trash-alt"></i></a> </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

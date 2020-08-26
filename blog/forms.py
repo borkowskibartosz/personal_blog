@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, Photo, Post
+from .models import Comment, Photo, Post, Category
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, UserChangeForm
@@ -9,7 +9,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         widgets = {
-          'content': forms.Textarea(attrs={'rows':2, 'cols':60}),
+          'content': forms.Textarea(attrs={'rows':2, 'cols':60, 'required': True}),
         }
         exclude = ['created_on', 'rating', 'source_post', 'author']
 
@@ -42,18 +42,18 @@ class UserPasswordResetForm(SetPasswordForm):
         }))
 
 
-class UserForgotPasswordForm(PasswordResetForm):
-    """User forgot password, check via email form."""
-    email = forms.EmailField(label='Email address',
-        max_length=254,
-        required=True,
-        widget=forms.TextInput(
-         attrs={'class': 'form-control',
-                'placeholder': 'email address',
-                'type': 'text',
-                'id': 'email_address'
-                }
-        ))
+# class UserForgotPasswordForm(PasswordResetForm):
+#     """User forgot password, check via email form."""
+#     email = forms.EmailField(label='Email address',
+#         max_length=254,
+#         required=True,
+#         widget=forms.TextInput(
+#          attrs={'class': 'form-control',
+#                 'placeholder': 'email address',
+#                 'type': 'text',
+#                 'id': 'email_address'
+#                 }
+#         ))
 
 
 class UserSignUpForm(UserCreationForm):
@@ -135,7 +135,7 @@ class AddPhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         widgets = {
-          'description': forms.TextInput(attrs={'input_type': 'text'}),
+          'description': forms.TextInput(attrs={'input_type': 'text', 'required': True}),
           'image': forms.FileInput()
         }
         exclude = ['uploaded_by']
@@ -147,8 +147,8 @@ class UpdatePostForm(forms.ModelForm):
         fields = ['title', 'content', 'status', 'photos', 'categories']
         
         widgets = {
-          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post Title','id': 'title'}),
-          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control'}),
+          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post Title','id': 'title', 'required': True}),
+          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control', 'required': True}),
           'status': forms.RadioSelect(attrs={'class': 'radio-inline'}),
           'photos': forms.CheckboxSelectMultiple(attrs={'label': 'Attached photos','class': 'checkbox'}),
           'categories': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
@@ -161,12 +161,20 @@ class CreatePostForm(forms.ModelForm):
         fields = ['title', 'status', 'photos', 'categories', 'content']
         
         widgets = {
-          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post title','id': 'title'}),
-          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control'}),
-          'status': forms.RadioSelect(attrs={'class': 'radio-inline'}),
+          'title': forms.TextInput(attrs={'label': 'title', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Post title','id': 'title', 'required': True}),
+          'content': forms.Textarea(attrs={'rows':50, 'cols':60, 'class': 'form-control', 'required': True}),
+          'status': forms.RadioSelect(attrs={'class': 'radio-inline', 'required': True}),
           'photos': forms.CheckboxSelectMultiple(attrs={'label': 'Attached photos','class': 'checkbox'}),
           'categories': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
+        }
 
+
+class CreateCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        widgets = {
+          'name': forms.TextInput(attrs={'label': 'name', 'input_type': 'text', 'class': 'form-control', 'placeholder': 'Category name','id': 'name', 'required': True}),
         }
 
 class UpdateUserForm(forms.ModelForm):
@@ -176,7 +184,7 @@ class UpdateUserForm(forms.ModelForm):
         fields = ['username','first_name', 'last_name']
 
         widgets = {
-          'username': forms.TextInput(attrs={'input_type': 'text', 'help_text': "<ul class='errorlist text-muted'><li>150 characters or fewer.</li>Letters, digits and @/./+/-/_ only.</ul>", 'class': 'form-control','id': 'username'}),
+          'username': forms.TextInput(attrs={'input_type': 'text', 'help_text': "<ul class='errorlist text-muted'><li>150 characters or fewer.</li>Letters, digits and @/./+/-/_ only.</ul>", 'class': 'form-control','id': 'username', 'required': True}),
           'first_name': forms.TextInput(attrs={'input_type': 'text', 'class': 'form-control','id': 'first_name'}),
           'last_name': forms.TextInput(attrs={'input_type': 'text', 'class': 'form-control','id': 'last_name'}),
         }
