@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 import os
-# import django_heroku
-# import dj_database_url
+import django_heroku
+import dj_database_url
 import dotenv
 from pathlib import Path
 
@@ -27,23 +27,25 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 #Sendgrid
 # with open('/home/bartosz/Documents/secret_key.txt') as f:
 # Add .env variables anywhere before SECRET_KEY
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+SECRET_KEY = os.environ['SECRET_KEY']
 
-# dotenv_file = os.path.join(BASE_DIR, ".env")
-
-# if os.path.isfile(dotenv_file):
-#     dotenv.load_dotenv(dotenv_file)
-# SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = '22+9#-5i_ohv(docvy9@#u)$z#wnr#63a*l=gdew4*v=#53h$#'
 
 #Google login
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '804199956062-mknu04ck39ucsq38l26ishdv9ldis6jv.apps.googleusercontent.com'
+
+
 # Github login
 SOCIAL_AUTH_GITHUB_KEY = 'e6c527609d67ec2321c5'
+
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'boiling-headland-55029.herokuapp.com']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'boiling-headland-55029.herokuapp.com']
 
 
 # Application definition
@@ -55,7 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'whitenoise.runserver_nostatic',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django_extensions',
     'django.contrib.humanize',
@@ -64,7 +66,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -104,6 +106,7 @@ TEMPLATES = [
                 'blog.context_processors.top_categories',
                 'social_django.context_processors.backends', # this
                 'social_django.context_processors.login_redirect', # and this
+                #'blog.context_processors.profile_picture_url',
 
             ],
         },
@@ -123,8 +126,8 @@ DATABASES = {
     }
 }
 
-# db_from_env = dj_database_url.config()
-# DATABASES['default'].update(db_from_env)
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -172,10 +175,9 @@ STATICFILES_DIRS = [
     BASE_DIR.joinpath("static"),
 ]
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
-# STATIC_ROOT = [BASE_DIR.joinpath('static'),]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = [BASE_DIR.joinpath('static'),]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# MEDIA_ROOT= [BASE_DIR.joinpath('media'),]
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
@@ -186,6 +188,8 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+
 SOCIAL_AUTH_GOOGLE_EXTRA_DATA = [
      ('picture', 'picture'),
 ]
@@ -201,4 +205,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
