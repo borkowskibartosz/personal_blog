@@ -122,16 +122,16 @@ WSGI_APPLICATION = 'Final_project.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#      'default': { 
-#         'NAME': 'blog_db',
-#         'HOST': 'localhost',
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'PASSWORD': 'coderslab',
-#         'USER': 'postgres',
-#         'PORT': 5432
-#     }
-# }
+DATABASES = {
+     'default': { 
+        'NAME': 'blog_db',
+        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql',
+        'PASSWORD': 'coderslab',
+        'USER': 'postgres',
+        'PORT': 5432
+    }
+}
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
@@ -210,6 +210,5 @@ EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
 
 django_heroku.settings(locals())
