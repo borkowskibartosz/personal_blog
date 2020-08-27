@@ -1,6 +1,6 @@
-Final_project/settings/
-Final_project/settings_debug.py
-Final_project/settings/development.py
+Final_project/.settings/
+Final_project/.settings_debug.py
+Final_project/.settings/development.py
 *.sqlite3
 .idea/
 
