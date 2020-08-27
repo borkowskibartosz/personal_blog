@@ -24,11 +24,11 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-dotenv_file = os.path.join(BASE_DIR, ".env")
-if os.path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
+# dotenv_file = os.path.join(BASE_DIR, ".env")
+# if os.path.isfile(dotenv_file):
+#     dotenv.load_dotenv(dotenv_file)
 
-# SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 SOCIAL_AUTH_GITHUB_SECRET = os.environ['SOCIAL_AUTH_GITHUB_SECRET']
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
@@ -39,9 +39,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '804199956062-mknu04ck39ucsq38l26ishdv9ldis6jv.a
 SOCIAL_AUTH_GITHUB_KEY = 'e6c527609d67ec2321c5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'boiling-headland-55029.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'obscure-temple-09838.herokuapp.com']
 
 
 # Application definition
@@ -123,7 +123,6 @@ WSGI_APPLICATION = 'Final_project.wsgi.application'
 # }
 
 DATABASES = {
-     'default': { 
         'NAME': 'blog_db',
         'HOST': 'localhost',
         'ENGINE': 'django.db.backends.postgresql',
@@ -131,7 +130,7 @@ DATABASES = {
         'USER': 'postgres',
         'PORT': 5432
     }
-}
+
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
@@ -203,12 +202,13 @@ SOCIAL_AUTH_GOOGLE_EXTRA_DATA = [
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# DEFAULT_FROM_EMAIL = 'borkowski.bartosz@gmail.com'
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'site@personal_blog.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 django_heroku.settings(locals())
