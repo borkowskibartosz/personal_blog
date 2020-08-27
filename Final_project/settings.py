@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
+
 import os
 import django_heroku
 import dj_database_url
@@ -123,6 +124,7 @@ WSGI_APPLICATION = 'Final_project.wsgi.application'
 # }
 
 DATABASES = {
+    'default': {
         'NAME': 'blog_db',
         'HOST': 'localhost',
         'ENGINE': 'django.db.backends.postgresql',
@@ -130,7 +132,7 @@ DATABASES = {
         'USER': 'postgres',
         'PORT': 5432
     }
-
+}
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
