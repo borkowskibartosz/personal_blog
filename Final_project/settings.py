@@ -38,8 +38,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '804199956062-mknu04ck39ucsq38l26ishdv9ldis6jv.a
 # Github login
 SOCIAL_AUTH_GITHUB_KEY = 'e6c527609d67ec2321c5'
 
-
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -117,12 +115,23 @@ WSGI_APPLICATION = 'Final_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# DATABASES = {
+#      'default': { 
+#         'NAME': 'blog_db',
+#         'HOST': 'localhost',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'PASSWORD': 'coderslab',
+#         'USER': 'postgres',
+#         'PORT': 5432
+#     }
+# }
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
