@@ -1,6 +1,8 @@
 Final_project/settings_debug.py
+Final_project/settings/development.py
 *.sqlite3
 .idea/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
