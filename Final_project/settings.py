@@ -27,6 +27,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
 SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = '22+9#-5i_ohv(docvy9@#u)$z#wnr#63a*l=gdew4*v=#53h$#'
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 SOCIAL_AUTH_GITHUB_SECRET = os.environ['SOCIAL_AUTH_GITHUB_SECRET']
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
