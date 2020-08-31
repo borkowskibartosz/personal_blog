@@ -54,8 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'django.contrib.humanize',
-    'storages',
     'social_django',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -172,7 +172,10 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'obscuretemplebucket'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3BotoStorage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/'
+STATIC_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/static/'
+MEDIA_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/media/'
+
+
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 # /AMAZON
 
@@ -180,9 +183,9 @@ STATICFILES_DIRS = [
     BASE_DIR.joinpath("static"),
 ]
 STATIC_ROOT = [BASE_DIR.joinpath('static'),]
+# MEDIA_URL = '/media/'
 
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 AUTH_PROFILE_MODULE = 'blog.UserProfile'
 LOGIN_URL = '/auth/login/google-oauth2/'
@@ -190,7 +193,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-
 
 SOCIAL_AUTH_GOOGLE_EXTRA_DATA = [
      ('picture', 'picture'),
