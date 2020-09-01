@@ -20,7 +20,7 @@ from pathlib import Path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -173,10 +173,13 @@ AWS_S3_REGION_NAME = "us-east-2"
 AWS_STORAGE_BUCKET_NAME = 'obscuretemplebucket'
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_FILE_OVERWITE = False
 STATICFILES_LOCATION = 'static'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
@@ -189,7 +192,7 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 #     'CacheControl': 'max-age=86400',
 # }
 # AWS_LOCATION = 'static'
-# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
@@ -197,13 +200,14 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 # ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 # /AMAZON
 
-# STATICFILES_DIRS = [
-#     BASE_DIR.joinpath("static"),
-# ]
 # STATIC_ROOT = [BASE_DIR.joinpath('static'),]
-# # MEDIA_URL = '/media/'
 
-# MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath("static"),
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 
 AUTH_PROFILE_MODULE = 'blog.UserProfile'
 LOGIN_URL = '/auth/login/google-oauth2/'
