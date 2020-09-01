@@ -35,7 +35,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '804199956062-mknu04ck39ucsq38l26ishdv9ldis6jv.a
 # Github login
 SOCIAL_AUTH_GITHUB_KEY = 'e6c527609d67ec2321c5'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'obscure-temple-09838.herokuapp.com']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'obscure-temple-09838.herokuapp.com']
+ALLOWED_HOSTS = ['obscure-temple-09838.herokuapp.com']
+
 
 
 # Application definition
@@ -158,11 +160,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-# STATIC_URL = '/static/' #WN
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' #WN
-
 #AMAZON
 AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
@@ -177,9 +174,8 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.us-east-2.amazonaws.com'
 AWS_S3_FILE_OVERWITE = False
 STATICFILES_LOCATION = 'static'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
