@@ -19,13 +19,11 @@ from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 
-# Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
 
 
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
@@ -36,9 +34,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '804199956062-mknu04ck39ucsq38l26ishdv9ldis6jv.apps.googleusercontent.com'
 # Github login
 SOCIAL_AUTH_GITHUB_KEY = 'e6c527609d67ec2321c5'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'obscure-temple-09838.herokuapp.com']
 
@@ -169,35 +164,46 @@ USE_TZ = True
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' #WN
 
 #AMAZON
+AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
+
+AWS_S3_REGION_NAME = "us-east-2"
+AWS_STORAGE_BUCKET_NAME = 'obscuretemplebucket'
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'obscuretemplebucket'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
-AWS_S3_REGION_NAME = "us-east-2"
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_LOCATION = 'static'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
-STATIC_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/static/'
-MEDIA_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/media/'
+
+##############################################################
+
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_LOCATION = 'static'
+# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 # /AMAZON
 
-STATICFILES_DIRS = [
-    BASE_DIR.joinpath("static"),
-]
-STATIC_ROOT = [BASE_DIR.joinpath('static'),]
-# MEDIA_URL = '/media/'
+# STATICFILES_DIRS = [
+#     BASE_DIR.joinpath("static"),
+# ]
+# STATIC_ROOT = [BASE_DIR.joinpath('static'),]
+# # MEDIA_URL = '/media/'
 
-MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 
 AUTH_PROFILE_MODULE = 'blog.UserProfile'
 LOGIN_URL = '/auth/login/google-oauth2/'
