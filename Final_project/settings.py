@@ -163,10 +163,9 @@ USE_L10N = True
 USE_TZ = True
 
 #AMAZON
-AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'Cache-Control': 'max-age=94608000',
-    }
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
 
 AWS_S3_REGION_NAME = "us-east-2"
 AWS_STORAGE_BUCKET_NAME = 'obscuretemplebucket'
