@@ -13,7 +13,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-DEBUG = False
+DEBUG = True
 
 
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
