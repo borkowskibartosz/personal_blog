@@ -6,12 +6,12 @@ class StaticStorage(S3Boto3Storage):
 
     location = settings.STATICFILES_LOCATION
 
-    def _clean_name(self, name):
-        return name
+    # def _clean_name(self, name):
+    #     return name
 
-    def _normalize_name(self, name):
-        if not name.endswith('/'):
-            name += "/"
+    # def _normalize_name(self, name):
+    #     if not name.endswith('/'):
+    #         name += "/"
 
     #     name += self.location
     #     return name
