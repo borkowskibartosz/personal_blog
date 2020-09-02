@@ -20,8 +20,9 @@ def get_avatar(backend, strategy, details, response,
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
         )
-        s3.Object(settings.AWS_STORAGE_BUCKET_NAME, f'{user.username}.jpg').put(Body=open(url, 'rb'))
-
+        r = requests.get(url)
+        s3.Object(settings.AWS_STORAGE_BUCKET_NAME, f'{user.username}.jpg').put(Body=r.content)
+        s3.Bucket('bucketname').upload_file('/local/file/here.txt','folder/sub/path/to/s3key')
         # r = requests.get(url)
         # with open(settings.MEDIA_ROOT + f"/profile/{user.username}.jpg", "wb") as f:
         #     f.write(r.content)
