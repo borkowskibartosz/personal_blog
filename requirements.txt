@@ -1,6 +1,7 @@
 python-dotenv
 boto3
 django-storages
+django-storages-redux
 appdirs==1.4.3
 asgiref==3.2.10
 attrs==20.1.0
