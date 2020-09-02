@@ -68,4 +68,4 @@ traitlets==4.3.3
 urllib3==1.25.8
 wcwidth==0.2.5
 webencodings==0.5.1
-whitenoise==5.2.0
+# whitenoise==5.2.0
