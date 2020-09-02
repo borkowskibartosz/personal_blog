@@ -46,7 +46,7 @@
           <li class="nav-item">
             {% if user.userprofile.avatar %}
             <a class="nav-link" href="{% url 'profile' %}"><img class="rounded border" style="width:25px"
-                src="{{user.userprofile.avatar.url}}"><strong> {{user}}</strong></a>
+                src="{{ MEDIA_URL }}/{{user.userprofile.avatar.url}}"><strong> {{user}}</strong></a>
             {% elif user.first_name and user.last_name %}
             <a class="nav-link" href="{% url 'profile' %}"><img class="rounded"
                 src="https://avatars.dicebear.com/api/initials/{{user.first_name.0}}_{{user.last_name.0}}.svg"
