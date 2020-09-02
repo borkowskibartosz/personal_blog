@@ -14,8 +14,8 @@ def get_avatar(backend, strategy, details, response,
         url = response['picture']
     if url:
         r = requests.get(url)
-        with open(settings.MEDIA_ROOT + f"/profile/{user.username}.jpg", "wb") as f:
-            f.write(r.content)
-        user_profile = UserProfile.objects.get(user=user)
-        user_profile.avatar = f"/profile/{user.username}.jpg"
-        user_profile.save()
+        # with open(settings.MEDIA_ROOT + f"/profile/{user.username}.jpg", "wb") as f:
+        #     f.write(r.content)
+        # user_profile = UserProfile.objects.get(user=user)
+        # user_profile.avatar = f"/profile/{user.username}.jpg"
+        # user_profile.save()
