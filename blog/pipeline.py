@@ -46,7 +46,7 @@ def get_avatar(backend, strategy, details, response,
         img_temp.write(urlopen(url).read())
         img_temp.flush()
         user_profile = UserProfile.objects.get(user=user)
-        user_profile.avatar.save(f"{user.username}", File(img_temp))                                
+        user_profile.avatar.save(f"{user.username}.jpg", File(img_temp))                                
 
         # user_profile = UserProfile.objects.get(user=user)
         # user_profile.avatar = f"/{user.username}.jpg"
