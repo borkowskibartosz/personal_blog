@@ -9,7 +9,6 @@ class Category(models.Model):
     """
     All posts are assigned to one or multiple categories - like tags
     """
-
     name = models.CharField(max_length=150, blank=True)
 
     def __str__(self):
@@ -26,7 +25,7 @@ class Photo(models.Model):
         blank=True,
     )
     image = models.ImageField(
-        upload_to="photos/%Y/%m/%d", blank=True, verbose_name="Photo to upload"
+        upload_to="photos", blank=True, verbose_name="Photo to upload"
     )
 
     def __str__(self):
