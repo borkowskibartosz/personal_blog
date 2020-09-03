@@ -155,7 +155,7 @@
                                     <th scope="row">{{picture.id}}</th>
                                     <td> {{picture.description}} </td>
                                     <td> <img class="rounded border" style="height:50px"
-                                            src="{{MEDIA_URL}}/media/{{picture.image}}"> </td>
+                                            src="{{picture.image.url}}"> </td>
                                     <td> <a class="btn btn-danger btn-sm"
                                             href="{% url 'delete-photo' picture.id %}?next={{request.path}}"
                                             role="button"><i class="far fa-trash-alt"></i></a> </td>
