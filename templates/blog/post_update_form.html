@@ -13,17 +13,13 @@
           <div class="card-body">
             <form method='POST'>
               {% csrf_token %}
-              {% comment %} <div class="form-group"> {% endcomment %}
               {{form.as_p}}
-                {% comment %} <textarea class="form-control" rows="3" name='content'></textarea>  {% endcomment %}
-              {% comment %} <textarea class="form-control" name="content" cols="40" rows="10" required="" id="id_content">{{object.content}}</textarea> {% endcomment %}
               <button type="submit" class="btn btn-primary" >Update</button>
               </div>
             </form>
           </div>
         </div>
         </form>
-      {% comment %} </div> {% endcomment %}
 
 {% endblock %}
 

@@ -17,7 +17,10 @@
               <!-- Standard login -->
               <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="form-group">
+                  <p><label for="id_username">Username:</label> <input type="text" name="username" class="form-control" autocomplete="username" maxlength="150" required="" id="id_username"></p>
+                  <p><label for="id_password">Password:</label> <input type="password" name="password" class="form-control" autocomplete="current-password" required="" id="id_password"></p>
+                </div>
                 <input class="btn btn-primary" type="submit" value="Login">
               </form>
               {% comment %} <a class="btn btn-primary" type="submit">Login</a> {% endcomment %}

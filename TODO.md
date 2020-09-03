@@ -94,14 +94,13 @@ DONE
 + categories in profile
 + add category
 + delete category
++ admin pass
++ heroku
++ s3 static and media settings
 
 TODO:
 - tests
 - configure send-grid
-- admin pass
-- admin path
-- heroku
-https://boiling-headland-55029.herokuapp.com/ | https://git.heroku.com/boiling-headland-55029.git
 
 
 TODO: BUGS:
